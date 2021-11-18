@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//import {getEditor} from './state/editor';
+import App from './examples/oldApp';
 import Editor from './components/Editor';
-import App from './examples/App';
 
 ReactDOM.render(
+//  <React.StrictMode>
+//    <App editor={getEditor()} />
+//  </React.StrictMode>
   <Editor/>,
  // <React.StrictMode>
  //   <App />

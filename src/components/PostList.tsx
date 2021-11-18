@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Element from './Element'
 
 const PostList = ({elements, remove}: any) => {

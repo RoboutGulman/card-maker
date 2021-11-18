@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import Card from './Card'
 import PostForm from './PostForm';
 import PostList from './PostList';
 
 const Editor = () => {
     const [elements, setElements] = useState([
-        {id:1, content: 'Javascript', paddingLeft: '15px',paddingTop:'50px'},
-        {id:2, content: 'Python', paddingLeft: '30px', paddingTop:'40px'},
+        /*{id:1, content: 'Javascript', paddingLeft: 15, paddingTop: 50},*/
+        {id:2, content: 'Python', paddingLeft: 35, paddingTop:40},
       ]);
       const createElement = (newElement:any) => {
         setElements([...elements, newElement])
