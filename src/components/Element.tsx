@@ -10,8 +10,8 @@ import MyButton from './button/MyButton'
   }
   remove: () => void
 }*/
-const Element = ({element, remove}:any) => { 
-  const [position, setPosition]=useState({x:element.paddingLeft, y:element.paddingTop})
+const Element = ({element}:any) => { 
+  const [position, setPosition]=useState({x:element.Position.x, y:element.Position.y})
   const [relativePosition, setRelativePosition]=useState({x:0, y:0})
   const [dragging, setDragging]=useState(false)
 
@@ -69,11 +69,10 @@ const Element = ({element, remove}:any) => {
             className="post">
           <div className="post__content">
             <div>
-              {element.content}
+              {element.content.textContent}
             </div>
           </div>
           <div className="post__btns">
-            <MyButton onClick={()=>{remove(element)}}>Удалить</MyButton>
           </div>
         </div>            
       )
@@ -82,3 +81,6 @@ const Element = ({element, remove}:any) => {
 
 
 export default Element
+/*
+ <MyButton onClick={()=>{remove(element)}}>Удалить</MyButton>
+*/

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './styles/App.css';
-import PostList from '../components/PostList';
+import PostList from '../components/ElementList';
 import MyButton from '../components/button/MyButton';
 import MyInput from '../components/input/MyInput';
 import PostForm from '../components/PostForm';
 
-function App() {
+function OldApp() {
   const [posts, setPosts] = useState([
     {id:1, title: 'Javascript', body: 'Description'},
     {id:2, title: 'Python', body: 'Description123'},
@@ -37,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+export default OldApp;

@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import MyButton from './button/MyButton'
 import MyInput from './input/MyInput'
+import {addText} from '../model/addText'
+import { dispatch } from '../state/editor'
 
-const PostForm = ({create}:any) => {
-    const[element,setElement]=useState({content:'', paddingLeft:'', paddingTop:''})
+const PostForm = (editor:any) => {
+    const[element,setElement]=useState({content:'', Left:'', Top:''})
+    let param: any;
 
-    const addNewElement = (e:Event) =>{
+    function onButtonClick() {
+      dispatch(addText, param)
+    }
+
+
+    const addNewElement = (e:Event) => {
         e.preventDefault()
-        const newElement = {
-            ...element,
-            id: Date.now()
-        }
-        create(newElement)
-        setElement({content:'', paddingLeft:'', paddingTop:''})
+        let x=Number(element.Left)
+        let y=Number(element.Top)
+        let width=200;
+        let height=100;
+        param = {editor, Position:{x, y}, size: {width, height}, content:element.content}
+        onButtonClick()
+        setElement({content:'', Left:'', Top:''})
     }
 
     return (
@@ -24,14 +33,14 @@ const PostForm = ({create}:any) => {
           placeholder="Контент"
         />
         <MyInput 
-          value={element.paddingLeft}
-          onChange={(e: { target: { value: any; }; }) => setElement({...element, paddingLeft: e.target.value})}
+          value={element.Left}
+          onChange={(e: { target: { value: any; }; }) => setElement({...element, Left: e.target.value})}
           type="text" 
           placeholder="х"
         />
         <MyInput 
-          value={element.paddingTop}
-          onChange={(e: { target: { value: any; }; }) => setElement({...element, paddingTop: e.target.value})}
+          value={element.Top}
+          onChange={(e: { target: { value: any; }; }) => setElement({...element, Top: e.target.value})}
           type="text" 
           placeholder="у"
         />        

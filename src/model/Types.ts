@@ -2,8 +2,14 @@
 export type Editor = {
     cardsHistory: CardsHistory,
     card: Card,
-    editorState: EditorState
+    selectedElementID: String,
+    history: History
 };
+
+export type History = {
+    undoStack: Card[];
+    currentState: number;    
+}
 
 export type Card = {
     title:String,
@@ -13,11 +19,16 @@ export type Card = {
     elements: CardElement[]
 };
 
-
+export enum ElementType {
+    TEXT,
+    IMAGE,
+    PRIMITIVE,
+  }
 export type CardElement = {
-    elementID: ElementID,
+    elementID: String,
     size: Size,
     Position: Position,
+    type: ElementType,
     content: TextElement|ImageElement|ArtObjectElement
 }
 
@@ -64,7 +75,7 @@ export type Size = {
 
 export type EditorState = {
   history: ActionHistory,
-  selectedElement: ElementID 
+  selectedElement: String 
 }
 
 export type ActionHistory = {
@@ -72,9 +83,6 @@ export type ActionHistory = {
     states: Card[]
 }
 
-export type ElementID = {
-     id: String
-}
 
 export type CardID = {
     id: String
@@ -87,7 +95,7 @@ export enum Color {
 }
 
 export type CardsHistory = {
-  cards: CardID[]
+  cards: String[]
 }
 
 

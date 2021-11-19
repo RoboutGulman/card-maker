@@ -1,11 +1,53 @@
-import {Editor} from '../model/Types';
+import {Editor, Color, ElementType, Position, Size} from '../model/Types';
 
-/*let editor: Editor = {}
+let editor: Editor = {
+  cardsHistory: {
+    cards:[
+      '42gwgpe'
+    ]
+    },
+    card:{
+      title: 'my presentation',
+      cardID: '12grwggr',
+      size: {
+        height:200,
+        width:300
+      },
+      backgroundColor: Color.red,
+      elements: [
+        {
+          elementID:'65',
+          size:{
+            height: 15,
+            width: 20,
+          },
+          Position: {
+            x:15,
+            y:20
+          },
+          type: ElementType.TEXT,
+          content: {
+            textContent: 'hello',
+            fontSize: 14,
+            fontFamily:'Calibri'            
+          }
+        }
+      ],
+    },
+    selectedElementID:'65',
+    history: {
+      undoStack:[],
+      currentState: -1
+    }
+}
+
 
 type HandlerFunc = (() => void) | null;
-type ModifyFunc = (editor: Editor) => Editor;
+type ModifyFunc = (editor: Editor, payload: any) => Editor;
 
-function getEditor(): Editor {
+let editorChangeHandler: HandlerFunc = null;
+
+  function getEditor(): Editor {
     return editor;
   }
   
@@ -17,8 +59,8 @@ function getEditor(): Editor {
     editorChangeHandler = handler;
   }
   
-  function dispatch(modifyFn: ModifyFunc): void {
-    const newEditor = modifyFn(editor);
+  function dispatch(modifyFn: ModifyFunc, payload: any): void {
+    const newEditor = modifyFn(editor, payload);
     setEditor(newEditor);
   
     if (editorChangeHandler !== null) {
@@ -30,4 +72,4 @@ function getEditor(): Editor {
     getEditor,
     addEditorChangeHandler,
     dispatch,
-  };*/
+  };
