@@ -4,7 +4,7 @@ import MyInput from './input/MyInput'
 import {addText} from '../model/addText'
 import { dispatch } from '../state/editor'
 
-const PostForm = (editor:any) => {
+const PostForm = () => {
     const[element,setElement]=useState({content:'', Left:'', Top:''})
     let param: any;
 
@@ -19,7 +19,7 @@ const PostForm = (editor:any) => {
         let y=Number(element.Top)
         let width=200;
         let height=100;
-        param = {editor, Position:{x, y}, size: {width, height}, content:element.content}
+        param = {Position:{x, y}, size: {width, height}, content:element.content}
         onButtonClick()
         setElement({content:'', Left:'', Top:''})
     }

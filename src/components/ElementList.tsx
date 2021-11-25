@@ -1,6 +1,12 @@
-import Element from './Element'
+import { FC } from 'react'
+import { Element, ElementType } from '../model/Types'
+import TextElementComponent from './TextElement'
 
-const ElementList = ({elements}: any) => {
+type ElementListProps ={
+  elements: Element[];
+}
+
+const ElementList: FC<ElementListProps> = ({elements}: ElementListProps) => {
     return (
         <div style={
           {
@@ -11,14 +17,14 @@ const ElementList = ({elements}: any) => {
             border: '1px lightgray'
           }
           }>
-           {elements.map((element: any, index: number) =>
-             <Element 
-               //remove={remove} 
-               number={index + 1} 
-               element={element} 
-               key={element.id}
-              />
-           )} 
+           {elements.map((element: Element, index: number) =>
+             <div>
+               {element.type == ElementType.TEXT
+                ? <TextElementComponent element={element} key={index}/>
+                : <div>fdghdgj</div>
+               }
+             </div>
+             )}
         </div>
     )
 }

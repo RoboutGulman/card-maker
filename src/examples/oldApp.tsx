@@ -23,9 +23,8 @@ function OldApp() {
   }
 
   return (
-    <div className='App'>
-     
-      <PostForm create = {createPost}/>
+    <div></div>
+/*    <div className='App'>
       {posts.length!==0
         ? <PostList remove= {removePost} posts={posts} title= 'Список постов 1'/>
         : <h1 style={{textAlign: "center"}}>
@@ -33,8 +32,8 @@ function OldApp() {
           </h1>
       }
   
-    </div>
+    </div>*/
   );
 }
 
-export default OldApp;
+export default OldApp; 

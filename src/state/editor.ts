@@ -26,11 +26,9 @@ let editor: Editor = {
             y:20
           },
           type: ElementType.TEXT,
-          content: {
-            textContent: 'hello',
-            fontSize: 14,
-            fontFamily:'Calibri'            
-          }
+          textContent: 'hello',
+          fontSize: 14,
+          fontFamily:'Calibri',            
         }
       ],
     },

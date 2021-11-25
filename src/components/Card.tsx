@@ -1,5 +1,5 @@
 import React from 'react'
-import Element from './Element'
+import Element from './TextElement'
 const Card = () => {
     return (
         <div >

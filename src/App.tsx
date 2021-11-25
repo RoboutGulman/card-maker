@@ -8,10 +8,9 @@ type AppProps = {
 }
 
 const App: FC<AppProps> = ({editor}: AppProps) => {
-    console.log(editor);
     return (
         <div className = 'app'>
-            <div><PostForm editor={editor} /> </div>
+            <div><PostForm/> </div>
             <div><ElementList elements={editor.card.elements}/></div>
         </div>
     )

@@ -16,8 +16,11 @@ export type Card = {
     cardID: String,
     size: Size,
     backgroundColor: Color,
-    elements: CardElement[]
+    elements: Element[]
 };
+
+export type Element= TextElement|ImageElement|ArtObjectElement;
+
 
 export enum ElementType {
     TEXT,
@@ -28,22 +31,23 @@ export type CardElement = {
     elementID: String,
     size: Size,
     Position: Position,
-    type: ElementType,
-    content: TextElement|ImageElement|ArtObjectElement
+    type: ElementType
 }
 
-export type TextElement = {
+export type TextElement = CardElement & {
+    type: ElementType.TEXT,
     textContent: String,
     fontSize: Number,
     fontFamily: String
 }
 
-export type ImageElement = {
+export type ImageElement = CardElement & {
+    type: ElementType.IMAGE,
     source: String
 }
 
-export type ArtObjectElement = {
-    type: ArtObjectType,
+export type ArtObjectElement = CardElement & {
+    type: ElementType.PRIMITIVE,
     content: Circle|null|Triangle
 }
 
@@ -64,8 +68,8 @@ export type Triangle = {
 }
 
 export type Position = {
-    x: Number,
-    y: Number
+    x: number,
+    y: number
 }
 
 export type Size = {

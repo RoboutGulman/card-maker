@@ -1,16 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
+import { removeText } from '../model/addText'
+import {  TextElement } from '../model/Types'
+import { dispatch } from '../state/editor'
 import MyButton from './button/MyButton'
-/*interface ElementProps{
-  content: string
-  element: {
-    paddingLeft: string
-    paddingTop: string
-    number: number
-  }
-  remove: () => void
-}*/
-const Element = ({element}:any) => { 
+
+type ElementProps = {
+   element: TextElement 
+}
+const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
   const [position, setPosition]=useState({x:element.Position.x, y:element.Position.y})
   const [relativePosition, setRelativePosition]=useState({x:0, y:0})
   const [dragging, setDragging]=useState(false)
@@ -23,6 +20,9 @@ const Element = ({element}:any) => {
       document.removeEventListener('mouseup', onMouseUp)
     }   
   }); 
+  const remove=(id: String)=>{
+    dispatch(removeText, id)
+  }
   
 
   const onMouseDown=(e: any ) => {
@@ -69,10 +69,11 @@ const Element = ({element}:any) => {
             className="post">
           <div className="post__content">
             <div>
-              {element.content.textContent}
+              {element.textContent}
             </div>
           </div>
           <div className="post__btns">
+            <MyButton onClick={()=>{remove(element.elementID)}}>Удалить</MyButton>
           </div>
         </div>            
       )
@@ -80,7 +81,7 @@ const Element = ({element}:any) => {
 
 
 
-export default Element
+export default TextElementComponent
 /*
- <MyButton onClick={()=>{remove(element)}}>Удалить</MyButton>
+
 */
