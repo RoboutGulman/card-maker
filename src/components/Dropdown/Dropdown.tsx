@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 ///import { mdiMenuDown } from "@mdi/js";
 // Icon from "@mdi/react";
-import './Dropdown.css';
+import classes from './Dropdown.module.css';
 export default function DropDown({ placeholder , content}:any) {
 const [active, setactive] = useState(0);
 return (
-<div className={active ? "dropdown_wrapper active" : "dropdown_wrapper"}>
-  <span
+<div className={active ? classes.wrapper_active+' '+classes.wrapper : classes.wrapper}>
+  <span className={classes.span}
     onClick={() => {
       setactive(active ? 0 : 1);
     }}
   >
   <div>{placeholder}</div>
   </span>
-  <div className="drop_down">
-    <ul>
+  <div className= {classes.drop_down}>
+    <ul className= {classes.ul}>
       {content &&
         content.map((item:any, key:any) => {
           return (
-            <li
+            <li className= {classes.li}
               onClick={() => {
                 setactive(0);
               }}

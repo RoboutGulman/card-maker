@@ -1,11 +1,11 @@
-.dropdown_wrapper {
+.wrapper {
     position: relative;
     margin-left: 20px;
     cursor: pointer;
     
   }
   
-  .dropdown_wrapper span {
+  .wrapper span {
     border: 1px solid #a8aaac;
     border-radius: 6px;
     background-color: #ffffff;
@@ -20,17 +20,17 @@
     display:flex;
     justify-content: center;
   }
-  .dropdown_wrapper span svg {
+  .wrapper span svg {
     width: 20px;
     margin-left: 80px;
     fill: #fbb800;
     transition: 0.5s ease all;
   }
-  .dropdown_wrapper.active span svg {
+  .wrapper_active span svg {
     transform: rotate(180deg);
     transition: 0.5s ease all;
   }
-  .dropdown_wrapper .drop_down {
+  .wrapper .drop_down {
     background-color: #fff;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     position: absolute;
@@ -44,18 +44,18 @@
     overflow: hidden;
     transition: 0.5s ease all;
   }
-  .dropdown_wrapper.active .drop_down {
+  .wrapper_active .drop_down {
     height: fit-content;
     opacity: 1;
     transition: 0.5s ease all;
   }
-  .dropdown_wrapper .drop_down ul {
+  .wrapper .drop_down ul {
     list-style: none;
     padding-left: 0;
     margin: 0;
     padding: 10px;
   }
-  .dropdown_wrapper .drop_down ul li {
+  .wrapper .drop_down ul li {
     padding: 10px 0px;
     color: #3d3e3f;
     font-size: 16px;
@@ -65,7 +65,7 @@
     cursor: pointer;
     font-weight: 300;
   }
-  .dropdown_wrapper .drop_down ul li:hover {
+  .wrapper .drop_down ul li:hover {
     color: #faab1e;
     transition: 0.5s ease all;
   }
