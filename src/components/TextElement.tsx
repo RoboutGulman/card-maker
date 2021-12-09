@@ -1,87 +1,80 @@
-import React, { FC, useEffect, useState } from 'react'
-import { removeText } from '../model/Text'
-import {  TextElement } from '../model/Types'
-import MyButton from './button/MyButton'
+import React, {FC, useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {Position, TextElement} from "../model/Types";
+import MyButton from "./button/MyButton";
 
 type ElementProps = {
-   element: TextElement,
-}
-const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
-  const [position, setPosition]=useState({x:element.Position.x, y:element.Position.y})
-  const [relativePosition, setRelativePosition]=useState({x:0, y:0})
-  const [dragging, setDragging]=useState(false)
+  element: TextElement;
+};
+const TextElementComponent: FC<ElementProps> = ({element} : ElementProps) => {
+  const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
+  const [dragging, setDragging] = useState(false);
 
-
-  useEffect(()=>{
-      document.addEventListener('mousemove', onMouseMove)
-      document.addEventListener('mouseup', onMouseUp)
+  useEffect(() => {
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
     return function cleanup() {
-      document.removeEventListener('mousemove', onMouseMove)
-      document.removeEventListener('mouseup', onMouseUp)
-    }   
-  }); 
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  });
 
-  
-
-  const onMouseDown=(e: any ) => {
+  const onMouseDown = (e : any) => {
     // only left mouse button
-    if (e.button !== 0) return   
-    setDragging(true)
-     setRelativePosition( {
-       x: e.pageX - position.x,
-       y: e.pageY - position.y
-     }
-   )
-    e.stopPropagation()
-    e.preventDefault()
+    if (e.button !== 0) 
+      return;
+    setDragging(true);
+    setRelativePosition({
+      x: e.pageX - element.Position.x,
+      y: e.pageY - element.Position.y
+    });
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
+  const onMouseMove = (e : any) => {
+    if (!dragging) 
+      return;
+    const x= e.pageX - relativePosition.x
+    const y= e.pageY - relativePosition.y      
+    dispatch(move(element.elementID, {x:x, y:y}))
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
+  const onMouseUp = (e : any) => {
+    setDragging(false);
+    e.stopPropagation();
+    e.preventDefault();
+  };
+  const dispatch = useDispatch();
+  function del(id : string) {
+    return {type: "DELETE_ELEMENT", id: id};
   }
-
-  const onMouseMove = (e:any) =>{
-    if (!dragging)  return
-      setPosition({
-        x: e.pageX - relativePosition.x,
-        y: e.pageY - relativePosition.y   
-      }
-     )
-     e.stopPropagation()
-     e.preventDefault()        
+  function move(id: string, Pos: Position){
+    return {type: "MOVE_ELEMENT", id: id, Position: Pos}
   }
+  return (<div onMouseDown={onMouseDown} style={{
+      position: "absolute",
+      left: element.Position.x + "px",
+      top: element.Position.y + "px",
+      background: "lightgray",
+      cursor: "pointer"
+    }} className="post">
+    <div className="post__content">
+      <div>{element.textContent}</div>
+    </div>
+    <div className="post__btns">
+      <MyButton onClick={() => {
+          dispatch(del(element.elementID));
+        }}>
+        Удалить
+      </MyButton>
+    </div>
+  </div>);
+};
 
-  const onMouseUp = (e:any) =>{
-    setDragging(false)
-    e.stopPropagation()
-    e.preventDefault()  
-  }
-    return (
-        <div 
-          onMouseDown= {onMouseDown} 
-          style={
-            {
-              position:'absolute', 
-              left: position.x+'px', 
-              top: position.y+'px',
-              background:'lightgray',
-              cursor: 'pointer'
-            }
-            } 
-            className="post">
-          <div className="post__content">
-            <div>
-              {element.textContent}
-            </div>
-          </div>
-          <div className="post__btns">
-            <MyButton onClick={()=>{}}>Удалить</MyButton>
-          </div>
-        </div>            
-      )
-}
-
-
-
-export default TextElementComponent
-/*
-обернуть драг энд дроп в пользовательский хук
+export default TextElementComponent;
+/* обернуть драг энд дроп в пользовательский хук
 сделать функцию изменения глобальных данных, убрать локальную модель данныхм
-remove(element.elementID)
-*/
+remove(element.elementID) */

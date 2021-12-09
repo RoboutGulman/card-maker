@@ -5,6 +5,12 @@ import classes from "./App.module.css";
 import { connect, useSelector } from "react-redux";
 import { store } from "./state/editor";
 
+function addText(textContent: string) { 
+  return {
+      type: "ADD_TEXT_ELEMENT", 
+      textContent: textContent
+  }
+}
 
 const bars = [
   {
@@ -43,7 +49,7 @@ const bars = [
     content: [
       {
         title: "текст",
-        func: () => {}
+        func: ()=>{const x=prompt();  return addText(x==null ? '' : x)}
       }, {
         title: "прямоугольник",
         func: () => {}
