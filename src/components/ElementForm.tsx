@@ -2,15 +2,11 @@ import React, { useState } from 'react'
 import MyButton from './button/MyButton'
 import MyInput from './input/MyInput'
 import {addText} from '../model/Text'
-import { dispatch } from '../state/editor'
 
 const ElementForm = () => {
     const[element,setElement]=useState({content:'', Left:'', Top:''})
     let param: any;
 
-    function onButtonClick() {
-      dispatch(addText, param)
-    }
 
 
     const addNewElement = (e:Event) => {
@@ -20,7 +16,6 @@ const ElementForm = () => {
         let width=200;
         let height=100;
         param = {Position:{x, y}, size: {width, height}, content:element.content}
-        onButtonClick()
         setElement({content:'', Left:'', Top:''})
     }
 

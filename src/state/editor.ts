@@ -1,6 +1,7 @@
-import {Editor, Color, ElementType} from '../model/Types';
+import {Editor, Color, ElementType, CardsHistory, History, Card} from '../model/Types';
+import {createStore} from "redux";
 
-let editor: Editor = {
+const editor: Editor = {
   cardsHistory: {
     cards:[
       '42gwgpe'
@@ -38,36 +39,41 @@ let editor: Editor = {
       currentState: -1
     }
 }
+const action={ type:'', payload:'?'}
 
+const reducers = (state = editor, action:any) => { 
+  return { 
+      cardsHistory: cardsHistory(state.cardsHistory, action), 
+      card: card(state.card, action), 
+      selectedElementID:selectedElementID(state.selectedElementID, action), 
+      history:history(state.history, action)
+  } 
+}
+const cardsHistory = (state: CardsHistory, action:any) => { 
+  return state
+}
+const selectedElementID = (state: string, action:any) => { 
+  return state
+}
+const history = (state: History, action:any) => { 
+  return state
+}
+const card = (state: Card, action:any) => { 
+  return {
+    cardID: state.cardID,
+    title: title(state.title, action),
+    size: state.size,
+    backgroundColor: state.backgroundColor,
+    elements: state.elements
+  }
+}
+const title = (state: string, action:any) => {
+  if (action.type === 'CHANGE_PRESENTATION_TITLE') { 
+      return action.title 
+  } else { 
+      return state 
+  } 
+}
 
-type HandlerFunc = (() => void) | null;
-type ModifyFunc = (editor: Editor, payload: any) => Editor;
+export const store=createStore(reducers)
 
-let editorChangeHandler: HandlerFunc = null;
-
-  function getEditor(): Editor {
-    return editor;
-  }
-  
-  function setEditor(newEditor: Editor): void {
-    editor = newEditor;
-  }
-  
-  function addEditorChangeHandler(handler: HandlerFunc): void {
-    editorChangeHandler = handler;
-  }
-  
-  function dispatch(modifyFn: ModifyFunc, payload: any): void {
-    const newEditor = modifyFn(editor, payload);
-    setEditor(newEditor);
-  
-    if (editorChangeHandler !== null) {
-      editorChangeHandler();
-    }
-  }
-  
-  export {
-    getEditor,
-    addEditorChangeHandler,
-    dispatch,
-  };

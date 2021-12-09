@@ -1,10 +1,10 @@
 import React, {FC} from "react";
+import { Content } from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
-
 interface DropDownProps {
   isActive: number;
   placeholder: String;
-  content: String[];
+  content: Content[];
   setActive: (num:number)=>void;
   index: number;
 }
@@ -24,11 +24,12 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
     <div className={classes.drop_down}>
       <ul className={classes.ul}>
         {
-          content && content.map((item : String, key : number) => {
+          content && content.map((item : Content, key : number) => {
             return (<li className={classes.li} onClick={() => {
               setActive(-1);
+              item.func();
               }} key={key}>
-              {item}
+              {item.title}
             </li>);
           })
         }

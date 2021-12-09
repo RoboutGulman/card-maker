@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { removeText } from '../model/Text'
 import {  TextElement } from '../model/Types'
-import { dispatch } from '../state/editor'
 import MyButton from './button/MyButton'
 
 type ElementProps = {
@@ -21,9 +20,7 @@ const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
       document.removeEventListener('mouseup', onMouseUp)
     }   
   }); 
-  const remove=(id: String)=>{
-    dispatch(removeText, id)
-  }
+
   
 
   const onMouseDown=(e: any ) => {
@@ -74,7 +71,7 @@ const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
             </div>
           </div>
           <div className="post__btns">
-            <MyButton onClick={()=>{remove(element.elementID)}}>Удалить</MyButton>
+            <MyButton onClick={()=>{}}>Удалить</MyButton>
           </div>
         </div>            
       )
@@ -85,5 +82,6 @@ const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
 export default TextElementComponent
 /*
 обернуть драг энд дроп в пользовательский хук
-сделать функцию изменения глобальных данных, убрать локальную модель данных
+сделать функцию изменения глобальных данных, убрать локальную модель данныхм
+remove(element.elementID)
 */

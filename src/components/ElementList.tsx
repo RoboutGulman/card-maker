@@ -20,7 +20,7 @@ const ElementList: FC<ElementListProps> = ({elements}: ElementListProps) => {
            {elements.map((element: Element, index: number) =>
              <div key={index}>
                {element.type === ElementType.TEXT
-                ? <TextElementComponent element={element} key={index}/>
+                ? <TextElementComponent element={element}/>
                 : <div>fdghdgj</div>
                }
              </div>

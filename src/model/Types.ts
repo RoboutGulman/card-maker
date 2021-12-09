@@ -2,7 +2,7 @@
 export type Editor = {
     cardsHistory: CardsHistory,
     card: Card,
-    selectedElementID: String,
+    selectedElementID: string,
     history: History
 };
 
@@ -12,8 +12,8 @@ export type History = {
 }
 
 export type Card = {
-    title:String,
-    cardID: String,
+    title:string,
+    cardID: string,
     size: Size,
     backgroundColor: Color,
     elements: Element[]
@@ -28,7 +28,7 @@ export enum ElementType {
     PRIMITIVE,
   }
 export type CardElement = {
-    elementID: String,
+    elementID: string,
     size: Size,
     Position: Position,
     type: ElementType
@@ -36,14 +36,14 @@ export type CardElement = {
 
 export type TextElement = CardElement & {
     type: ElementType.TEXT,
-    textContent: String,
+    textContent: string,
     fontSize: number,
-    fontFamily: String
+    fontFamily: string
 }
 
 export type ImageElement = CardElement & {
     type: ElementType.IMAGE,
-    source: String
+    source: string
 }
 
 export type ArtObjectElement = CardElement & {
@@ -79,7 +79,7 @@ export type Size = {
 
 export type EditorState = {
   history: ActionHistory,
-  selectedElement: String 
+  selectedElement: string 
 }
 
 export type ActionHistory = {
@@ -89,7 +89,7 @@ export type ActionHistory = {
 
 
 export type CardID = {
-    id: String
+    id: string
 }
 
 export enum Color {
@@ -99,7 +99,7 @@ export enum Color {
 }
 
 export type CardsHistory = {
-  cards: String[]
+  cards: string[]
 }
 
 
