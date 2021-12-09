@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import MyButton from './button/MyButton'
 import MyInput from './input/MyInput'
-import {addText} from '../model/addText'
+import {addText} from '../model/Text'
 import { dispatch } from '../state/editor'
 
-const PostForm = () => {
+const ElementForm = () => {
     const[element,setElement]=useState({content:'', Left:'', Top:''})
     let param: any;
 
@@ -49,4 +49,4 @@ const PostForm = () => {
     )
 }
 
-export default PostForm
+export default ElementForm

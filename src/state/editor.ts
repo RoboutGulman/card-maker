@@ -1,4 +1,4 @@
-import {Editor, Color, ElementType, Position, Size} from '../model/Types';
+import {Editor, Color, ElementType} from '../model/Types';
 
 let editor: Editor = {
   cardsHistory: {
@@ -7,7 +7,7 @@ let editor: Editor = {
     ]
     },
     card:{
-      title: 'my presentation',
+      title: 'my card',
       cardID: '12grwggr',
       size: {
         height:200,

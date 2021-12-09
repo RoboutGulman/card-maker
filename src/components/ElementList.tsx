@@ -11,15 +11,15 @@ const ElementList: FC<ElementListProps> = ({elements}: ElementListProps) => {
         <div style={
           {
             position:'relative', 
-            width: '400px',
-            height:'100px', 
-            backgroundColor: 'red', 
+            width: '800px',
+            height:'600px', 
+            backgroundColor: 'white', 
             border: '1px lightgray'
           }
           }>
            {elements.map((element: Element, index: number) =>
-             <div>
-               {element.type == ElementType.TEXT
+             <div key={index}>
+               {element.type === ElementType.TEXT
                 ? <TextElementComponent element={element} key={index}/>
                 : <div>fdghdgj</div>
                }

@@ -37,7 +37,7 @@ export type CardElement = {
 export type TextElement = CardElement & {
     type: ElementType.TEXT,
     textContent: String,
-    fontSize: Number,
+    fontSize: number,
     fontFamily: String
 }
 
@@ -58,7 +58,7 @@ export enum ArtObjectType {
 }
 
 export type Circle = {
-    radius: Number
+    radius: number
 }
 
 
@@ -73,8 +73,8 @@ export type Position = {
 }
 
 export type Size = {
-    height: Number,
-    width: Number
+    height: number,
+    width: number
 }
 
 export type EditorState = {

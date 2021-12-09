@@ -1,16 +1,17 @@
 import React, { FC, useEffect, useState } from 'react'
-import { removeText } from '../model/addText'
+import { removeText } from '../model/Text'
 import {  TextElement } from '../model/Types'
 import { dispatch } from '../state/editor'
 import MyButton from './button/MyButton'
 
 type ElementProps = {
-   element: TextElement 
+   element: TextElement,
 }
 const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
   const [position, setPosition]=useState({x:element.Position.x, y:element.Position.y})
   const [relativePosition, setRelativePosition]=useState({x:0, y:0})
   const [dragging, setDragging]=useState(false)
+
 
   useEffect(()=>{
       document.addEventListener('mousemove', onMouseMove)
@@ -39,7 +40,7 @@ const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
   }
 
   const onMouseMove = (e:any) =>{
-    if (!dragging) return
+    if (!dragging)  return
       setPosition({
         x: e.pageX - relativePosition.x,
         y: e.pageY - relativePosition.y   
@@ -83,5 +84,6 @@ const TextElementComponent: FC<ElementProps> = ({element}: ElementProps) => {
 
 export default TextElementComponent
 /*
-
+обернуть драг энд дроп в пользовательский хук
+сделать функцию изменения глобальных данных, убрать локальную модель данных
 */
