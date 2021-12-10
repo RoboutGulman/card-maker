@@ -1,16 +1,16 @@
 import React, {FC} from "react";
-import { useDispatch } from "react-redux";
-import { Content } from "../Menu/Menu";
+import {useDispatch} from "react-redux";
+import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
 interface DropDownProps {
   isActive: number;
   placeholder: String;
   content: Content[];
-  setActive: (num:number)=>void;
+  setActive: (num : number) => void;
   index: number;
 }
 const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive, index} : DropDownProps) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (<div className={isActive
       ? classes.wrapper_active + " " + classes.wrapper
       : classes.wrapper
@@ -28,8 +28,8 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
         {
           content && content.map((item : Content, key : number) => {
             return (<li className={classes.li} onClick={() => {
-              setActive(-1);
-              dispatch(item.func());
+                setActive(-1);
+                dispatch(item.func());
               }} key={key}>
               {item.title}
             </li>);

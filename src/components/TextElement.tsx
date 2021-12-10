@@ -35,9 +35,12 @@ const TextElementComponent: FC<ElementProps> = ({element} : ElementProps) => {
   const onMouseMove = (e : any) => {
     if (!dragging) 
       return;
-    const x= e.pageX - relativePosition.x
-    const y= e.pageY - relativePosition.y      
-    dispatch(move(element.elementID, {x:x, y:y}))
+    const x = e.pageX - relativePosition.x;
+    const y = e.pageY - relativePosition.y;
+    dispatch(move(element.elementID, {
+      x: x,
+      y: y
+    }));
     e.stopPropagation();
     e.preventDefault();
   };
@@ -51,8 +54,8 @@ const TextElementComponent: FC<ElementProps> = ({element} : ElementProps) => {
   function del(id : string) {
     return {type: "DELETE_ELEMENT", id: id};
   }
-  function move(id: string, Pos: Position){
-    return {type: "MOVE_ELEMENT", id: id, Position: Pos}
+  function move(id : string, Pos : Position) {
+    return {type: "MOVE_ELEMENT", id: id, Position: Pos};
   }
   return (<div onMouseDown={onMouseDown} style={{
       position: "absolute",

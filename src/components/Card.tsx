@@ -1,11 +1,7 @@
-import React from 'react'
-import Element from './TextElement'
+import React from "react";
+import Element from "./TextElement";
 const Card = () => {
-    return (
-        <div >
-            
-        </div>
-    )
-}
+  return <div></div>;
+};
 
-export default Card
+export default Card;

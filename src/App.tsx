@@ -2,14 +2,11 @@ import React, {FC} from "react";
 import ElementList from "./components/ElementList";
 import Menu from "./components/Menu/Menu";
 import classes from "./App.module.css";
-import { connect, useSelector } from "react-redux";
-import { store } from "./state/editor";
+import {connect, useSelector} from "react-redux";
+import {store} from "./state/editor";
 
-function addText(textContent: string) { 
-  return {
-      type: "ADD_TEXT_ELEMENT", 
-      textContent: textContent
-  }
+function addText(textContent : string) {
+  return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
 }
 
 const bars = [
@@ -49,7 +46,13 @@ const bars = [
     content: [
       {
         title: "текст",
-        func: ()=>{const x=prompt();  return addText(x==null ? '' : x)}
+        func: () => {
+          const x = prompt();
+          return addText(
+            x == null
+            ? ""
+            : x);
+        }
       }, {
         title: "прямоугольник",
         func: () => {}
@@ -64,7 +67,7 @@ const bars = [
   }
 ];
 
-const App = ({card}:any) => {
+const App = ({card} : any) => {
   return (<div className={classes.app}>
     <div className={classes.title}>{card.title}</div>
     <div className={classes.border}></div>
@@ -77,8 +80,11 @@ const App = ({card}:any) => {
   </div>);
 };
 
-function mapStateToProps(state:any) {
-  return { card: state.card} 
-};
+function mapStateToProps(state : any) {
+  return {card: state.card};
+}
 
 export default connect(mapStateToProps)(App);
+/* bars можно не перерисовывать, то есть изменить тут connect
+брать элементы из стейта уже в elements(если это так работает)
+elementForm и text.ts можно удалять */

@@ -103,9 +103,9 @@ const elements = (state : Element[], action : any) => {
     case "MOVE_ELEMENT":
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
-          element.Position = action.Position
+          element.Position = action.Position;
         }
-        return element
+        return element;
       });
     default:
       return state;
