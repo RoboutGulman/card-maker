@@ -1,13 +1,38 @@
-import React from "react";
-import classes from "./MyButton.module.css";
+import "./MyButton.css"
+import {useState} from "react";
+import {Spinner} from "../Spinner/Spinner";
+import {withMods} from "../withMods";
 
-const MyButton = ({
-  children,
-  ...props
-} : any) => {
-  return (<button {...props} className={classes.myBtn}>
-    {children}
-  </button>);
-};
+/**
+ * @param {{
+ *   text: string,
+ *   loading: (boolean|undefined),
+ *   onClick: function(): void,
+ * }} props
+ */
+function MyButton({
+	text,
+	onClick,
+	loading = false,
+}: {
+	text: string,
+	onClick: () => void,
+	loading?: boolean,
+}) {
+	const [hover, setHovered] = useState(false)
+	return (
+<button
+	className={withMods("button", { // разворачиваем в строку 'button'|'button button_hover'|'button button_loading'
+		"hover": !loading && hover,
+		"loading": loading,
+	})}
+	disabled={loading}
+	onMouseOver={() => setHovered(true)}
+	onMouseOut={() => setHovered(false)}
+	onClick={onClick}
+>
+	<span className={"button-text"}>{text}</span>
+</button>)
+}
 
 export default MyButton;

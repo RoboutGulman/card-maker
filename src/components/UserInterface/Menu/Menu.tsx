@@ -2,12 +2,12 @@ import React, {FC, useState} from "react";
 import Dropdown from "../Dropdown/Dropdown";
 import classes from "./Menu.module.css";
 export type Content = {
-  title: String;
+  title: string;
   func: () => any;
 };
 interface MenuProps {
   bars: {
-    placeholder: String;
+    placeholder: string;
     content: Content[];
   }[];
 }
@@ -16,8 +16,8 @@ const Menu: FC<MenuProps> = ({bars} : MenuProps) => {
   return (<div className={classes.Menu}>
     {
       bars.map((bar : {
-        placeholder: String;
-        content: Content[]
+        placeholder: string;
+        content: Content[];
       }, index : number) => (<div key={index}>
         <Dropdown isActive={active === index
             ? 1

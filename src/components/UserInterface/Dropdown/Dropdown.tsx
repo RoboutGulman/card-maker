@@ -1,10 +1,11 @@
 import React, {FC} from "react";
 import {useDispatch} from "react-redux";
+import MyButton from "../button/MyButton";
 import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
 interface DropDownProps {
   isActive: number;
-  placeholder: String;
+  placeholder: string;
   content: Content[];
   setActive: (num : number) => void;
   index: number;
@@ -15,24 +16,20 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
       ? classes.wrapper_active + " " + classes.wrapper
       : classes.wrapper
 }>
-    <span className={classes.span} onClick={() => {
+    <MyButton text={placeholder} onClick={() => {
         setActive(
           isActive
           ? -1
           : index);
-      }}>
-      <div>{placeholder}</div>
-    </span>
+      }}/>
     <div className={classes.drop_down}>
       <ul className={classes.ul}>
         {
           content && content.map((item : Content, key : number) => {
-            return (<li className={classes.li} onClick={() => {
+            return (<MyButton text={item.title} onClick={() => {
                 setActive(-1);
                 dispatch(item.func());
-              }} key={key}>
-              {item.title}
-            </li>);
+              }}/>);
           })
         }
       </ul>

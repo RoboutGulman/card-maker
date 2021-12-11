@@ -12,7 +12,7 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
-  const dragAndDrop = useDragAndDrop({ element, parentSize, ref});
+  const dragAndDrop = useDragAndDrop({element, parentSize, ref});
 
   useEffect(() => {
     document.addEventListener("mousemove", dragAndDrop.onMouseMove);
@@ -38,11 +38,9 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
       <div>{element.textContent}</div>
     </div>
     <div className="post__btns">
-      <MyButton onClick={() => {
+      <MyButton text="удалить" loading={false} onClick={() => {
           dispatch(del(element.elementID));
-        }}>
-        Удалить
-      </MyButton>
+        }}/>
     </div>
   </div>);
 };
