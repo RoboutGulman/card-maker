@@ -1,15 +1,14 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {Position, Size, TextElement} from "../model/Types";
+import {Size, TextElement} from "../model/Types";
 import MyButton from "./UserInterface/button/MyButton";
 import useDragAndDrop from "./useDragAndDrop";
 
 type ElementProps = {
   parentSize: Size;
-  parentLeft: number;
   element: TextElement;
 };
-const TextElementComponent: FC<ElementProps> = ({parentSize, parentLeft, element} : ElementProps) => {
+const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 

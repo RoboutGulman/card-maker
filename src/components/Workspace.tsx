@@ -1,4 +1,4 @@
-import {FC, useRef} from "react";
+import {FC} from "react";
 import {Element, ElementType, Size} from "../model/Types";
 import TextElementComponent from "./TextElement";
 
@@ -8,9 +8,7 @@ type WorkspaceProps = {
 };
 
 const Workspace: FC<WorkspaceProps> = ({elements, size} : WorkspaceProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const left = ref?.current?.getBoundingClientRect().left
-  return (<div ref={ref} style={{
+  return (<div  style={{
       position: "relative",
       width: size.width+"px",
       height: size.height+"px",
@@ -21,7 +19,7 @@ const Workspace: FC<WorkspaceProps> = ({elements, size} : WorkspaceProps) => {
       elements.map((element : Element, index : number) => (<div key={index}>
         {
           element.type === ElementType.TEXT
-            ? (<TextElementComponent parentSize={size} parentLeft={left == null? 0 : left} element={element}/>)
+            ? (<TextElementComponent parentSize={size}  element={element}/>)
             : (<div></div>)
         }
       </div>))

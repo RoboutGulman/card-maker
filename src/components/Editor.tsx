@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React from "react";
 import Menu from "./UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
