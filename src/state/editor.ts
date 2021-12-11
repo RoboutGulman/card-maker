@@ -8,8 +8,7 @@ import {
   Element
 } from "../model/Types";
 import {createStore} from "redux";
-import ElementList from "../components/ElementList";
-import {uuid} from "uuidv4";
+import { v4 as uuidv4 } from 'uuid';
 
 const editor: Editor = {
   cardsHistory: {
@@ -19,8 +18,8 @@ const editor: Editor = {
     title: "my card",
     cardID: "12grwggr",
     size: {
-      height: 200,
-      width: 300
+      height: 600,
+      width: 800
     },
     backgroundColor: Color.red,
     elements: [
@@ -83,7 +82,7 @@ const elements = (state : Element[], action : any) => {
     case "ADD_TEXT_ELEMENT":
       return state.concat([
         {
-          elementID: uuid(),
+          elementID: uuidv4(),
           size: {
             height: 100,
             width: 200
@@ -99,7 +98,7 @@ const elements = (state : Element[], action : any) => {
         }
       ]);
     case "DELETE_ELEMENT":
-      return state.filter((p) => p.elementID != action.id);
+      return state.filter((p) => p.elementID !== action.id);
     case "MOVE_ELEMENT":
       return state.map((element : Element) => {
         if (element.elementID === action.id) {

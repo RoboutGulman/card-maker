@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import ElementList from "./components/ElementList";
-import Menu from "./components/Menu/Menu";
-import classes from "./App.module.css";
+import Menu from "./UserInterface/Menu/Menu";
+import classes from "./Editor.module.css";
 import {connect} from "react-redux";
+import Workspace from "./Workspace";
 
 function addText(textContent : string) {
   return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
@@ -14,16 +14,16 @@ const bars = [
     content: [
       {
         title: "создать",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "открыть",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "сохранить",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "о программе",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }
     ]
   }, {
@@ -31,13 +31,13 @@ const bars = [
     content: [
       {
         title: "серый",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "красный",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "синий",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }
     ]
   }, {
@@ -54,19 +54,19 @@ const bars = [
         }
       }, {
         title: "прямоугольник",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "треугольник",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }, {
         title: "круг",
-        func: () => {}
+        func: () => {return {type: "UNDEFINED"}}
       }
     ]
   }
 ];
 
-const App = ({card} : any) => {
+const Editor = ({card} : any) => {
   return (<div className={classes.app}>
     <div className={classes.title}>{card.title}</div>
     <div className={classes.border}></div>
@@ -74,7 +74,7 @@ const App = ({card} : any) => {
       <Menu bars={bars}></Menu>
     </div>
     <div className={classes.workspace}>
-      <ElementList elements={card.elements}/>
+      <Workspace size={card.size} elements={card.elements}/>
     </div>
   </div>);
 };
@@ -83,7 +83,7 @@ function mapStateToProps(state : any) {
   return {card: state.card};
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Editor);
 /* bars можно не перерисовывать, то есть изменить тут connect
 брать элементы из стейта уже в elements(если это так работает)
 elementForm и text.ts можно удалять */
