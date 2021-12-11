@@ -19,7 +19,7 @@ const ElementList: FC<ElementListProps> = ({elements} : ElementListProps) => {
         {
           element.type === ElementType.TEXT
             ? (<TextElementComponent element={element}/>)
-            : (<div>fdghdgj</div>)
+            : (<div></div>)
         }
       </div>))
     }

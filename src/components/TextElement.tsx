@@ -80,4 +80,5 @@ const TextElementComponent: FC<ElementProps> = ({element} : ElementProps) => {
 export default TextElementComponent;
 /* обернуть драг энд дроп в пользовательский хук
 сделать функцию изменения глобальных данных, убрать локальную модель данныхм
-remove(element.elementID) */
+remove(element.elementID) 
+действия 3 видов отноительно истории: те, которые записываются, не запиываются и заменяют предыдущее изменение истории*/

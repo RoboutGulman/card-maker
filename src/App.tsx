@@ -2,8 +2,7 @@ import React, {FC} from "react";
 import ElementList from "./components/ElementList";
 import Menu from "./components/Menu/Menu";
 import classes from "./App.module.css";
-import {connect, useSelector} from "react-redux";
-import {store} from "./state/editor";
+import {connect} from "react-redux";
 
 function addText(textContent : string) {
   return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
