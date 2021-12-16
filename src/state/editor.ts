@@ -5,7 +5,8 @@ import {
   CardsHistory,
   History,
   Card,
-  Element
+  Element,
+  ArtObjectType
 } from "../model/Types";
 import {createStore} from "redux";
 import { v4 as uuidv4 } from 'uuid';
@@ -24,6 +25,7 @@ const editor: Editor = {
     backgroundColor: Color.red,
     elements: [
       {
+        type: ElementType.TEXT,
         elementID: "65",
         size: {
           height: 15,
@@ -33,10 +35,22 @@ const editor: Editor = {
           x: 15,
           y: 20
         },
-        type: ElementType.TEXT,
         textContent: "hello",
         fontSize: 14,
         fontFamily: "Calibri"
+      },
+      {
+        type: ElementType.ARTOBJECT,
+        elementID: "5",
+        size: {
+          height: 15,
+          width: 20
+        },
+        Position: {
+          x: 44,
+          y: 230
+        },
+        artObjectType:ArtObjectType.CIRCLE,
       }
     ]
   },

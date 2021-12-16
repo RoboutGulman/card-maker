@@ -23,7 +23,7 @@ export type Element = TextElement | ImageElement | ArtObjectElement;
 export enum ElementType {
   TEXT,
   IMAGE,
-  PRIMITIVE
+  ARTOBJECT
 }
 export type CardElement = {
   elementID: string;
@@ -45,24 +45,15 @@ export type ImageElement = CardElement & {
 };
 
 export type ArtObjectElement = CardElement & {
-  type: ElementType.PRIMITIVE;
-  content: Circle | null | Triangle;
+  type: ElementType.ARTOBJECT;
+  artObjectType: ArtObjectType
 };
 
 export enum ArtObjectType {
-  Circle,
-  Rectangle,
-  Triangle
+  CIRCLE,
+  RECTANGLE,
+  TRIANGLE
 }
-
-export type Circle = {
-  radius: number;
-};
-
-export type Triangle = {
-  apexTwo: Position;
-  apexThree: Position;
-};
 
 export type Position = {
   x: number;

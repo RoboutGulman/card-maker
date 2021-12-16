@@ -10,7 +10,7 @@ type ElementProps = {
 };
 const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementProps) => {
   const dispatch = useDispatch();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<SVGTextElement>(null);
 
   const dragAndDrop = useDragAndDrop({element, parentSize, ref});
 
@@ -27,22 +27,25 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
     return {type: "DELETE_ELEMENT", id: id};
   }
 
-  return (<div ref={ref} onMouseDown={dragAndDrop.onMouseDown} style={{
+  return (<text ref={ref} 
+    x={element.Position.x}
+    y={element.Position.y}
+    dominantBaseline="hanging"
+    textAnchor="left"
+    onMouseDown={dragAndDrop.onMouseDown} style={{
       position: "absolute",
+      fontFamily: element.fontFamily,
+      fontSize: element.fontSize,
       left: element.Position.x + "px",
       top: element.Position.y + "px",
+      width:'20px',
+      height: '30px',
       background: "lightgray",
-      cursor: "pointer"
+      cursor: "pointer",
+      userSelect: 'none'
     }} className="post">
-    <div className="post__content">
-      <div>{element.textContent}</div>
-    </div>
-    <div className="post__btns">
-      <MyButton text="удалить" loading={false} onClick={() => {
-          dispatch(del(element.elementID));
-        }}/>
-    </div>
-  </div>);
+      {element.textContent}
+  </text>);
 };
 
 export default TextElementComponent;

@@ -5,7 +5,7 @@ import {Position, Element, Size} from "../model/Types";
 type dragAndDrop = {
   element: Element;
   parentSize: Size;
-  ref: React.RefObject<HTMLDivElement>
+  ref: React.RefObject<SVGTextElement>
 };
 
 export default function useDragAndDrop({ref, element, parentSize} : dragAndDrop) {

@@ -1,8 +1,8 @@
 import React from "react";
-import Menu from "./UserInterface/Menu/Menu";
+import Menu from "../UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
-import Workspace from "./Workspace";
+import Workspace from "../Workspace";
 
 function addText(textContent : string) {
   return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
