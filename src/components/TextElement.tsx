@@ -33,14 +33,8 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
     dominantBaseline="hanging"
     textAnchor="left"
     onMouseDown={dragAndDrop.onMouseDown} style={{
-      position: "absolute",
       fontFamily: element.fontFamily,
       fontSize: element.fontSize,
-      left: element.Position.x + "px",
-      top: element.Position.y + "px",
-      width:'20px',
-      height: '30px',
-      background: "lightgray",
       cursor: "pointer",
       userSelect: 'none'
     }} className="post">
@@ -53,4 +47,5 @@ export default TextElementComponent;
 /* обернуть драг энд дроп в пользовательский хук
 сделать функцию изменения глобальных данных, убрать локальную модель данныхм
 remove(element.elementID)
-действия 3 видов отноительно истории: те, которые записываются, не запиываются и заменяют предыдущее изменение истории */
+действия 3 видов отноительно истории: те, которые записываются, не запиываются и заменяют предыдущее изменение истории
+multiline text tspan */

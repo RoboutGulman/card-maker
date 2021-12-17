@@ -51,7 +51,33 @@ const editor: Editor = {
           y: 230
         },
         artObjectType:ArtObjectType.CIRCLE,
-      }
+      },
+      {
+        type: ElementType.ARTOBJECT,
+        elementID: "85",
+        size: {
+          height: 15,
+          width: 20
+        },
+        Position: {
+          x: 10,
+          y: 200
+        },
+        artObjectType:ArtObjectType.RECTANGLE,
+      },
+      {
+        type: ElementType.ARTOBJECT,
+        elementID: "34",
+        size: {
+          height: 40,
+          width: 60
+        },
+        Position: {
+          x: 70,
+          y: 230
+        },
+        artObjectType:ArtObjectType.TRIANGLE,
+      },
     ]
   },
   selectedElementID: "65",
@@ -59,10 +85,6 @@ const editor: Editor = {
     undoStack: [],
     currentState: -1
   }
-};
-const action = {
-  type: "",
-  payload: "?"
 };
 
 const reducers = (state = editor, action : any) => {
@@ -107,8 +129,8 @@ const elements = (state : Element[], action : any) => {
           },
           type: ElementType.TEXT,
           textContent: action.textContent,
-          fontSize: 10,
-          fontFamily: ""
+          fontSize: 15,
+          fontFamily: "serif"
         }
       ]);
     case "DELETE_ELEMENT":

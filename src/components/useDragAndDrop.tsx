@@ -1,11 +1,13 @@
+import React from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {Position, Element, Size} from "../model/Types";
+import { ArtObject } from "./ArtObjectComponent";
 
 type dragAndDrop = {
   element: Element;
   parentSize: Size;
-  ref: React.RefObject<SVGTextElement>
+  ref: React.RefObject<any>
 };
 
 export default function useDragAndDrop({ref, element, parentSize} : dragAndDrop) {
