@@ -54,33 +54,33 @@ const bars = [
         }
       }, {
         title: "прямоугольник",
-        func: () => {return {type: "UNDEFINED"}}
+        func: () => {return {type: "ADD_RECTANGLE"}}
       }, {
         title: "треугольник",
-        func: () => {return {type: "UNDEFINED"}}
+        func: () => {return {type: "ADD_TRIANGLE"}}
       }, {
         title: "круг",
-        func: () => {return {type: "UNDEFINED"}}
+        func: () => {return {type: "ADD_CIRCLE"}}
       }
     ]
   }
 ];
 
-const Editor = ({card} : any) => {
+const Editor = ({editor} : any) => {
   return (<div className={classes.app}>
-    <div className={classes.title}>{card.title}</div>
+    <div className={classes.title}>{editor.card.title}</div>
     <div className={classes.border}></div>
     <div>
       <Menu bars={bars}></Menu>
     </div>
     <div className={classes.workspace}>
-      <Workspace size={card.size} elements={card.elements}/>
+      <Workspace selectedElementID={editor.selectedElementID}size={editor.card.size} elements={editor.card.elements}/>
     </div>
   </div>);
 };
 
 function mapStateToProps(state : any) {
-  return {card: state.card};
+  return {editor: state};
 }
 
 export default connect(mapStateToProps)(Editor);

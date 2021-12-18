@@ -4,6 +4,12 @@ import {Size, TextElement} from "../model/Types";
 import MyButton from "./UserInterface/button/MyButton";
 import useDragAndDrop from "./useDragAndDrop";
 
+export function select(id: string) {
+  console.log('select')
+  console.log(id)
+  return {type: "CHANGE_SELECTED_ELEMENT_ID", id: id}
+}
+
 type ElementProps = {
   parentSize: Size;
   element: TextElement;
@@ -27,11 +33,13 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
     return {type: "DELETE_ELEMENT", id: id};
   }
 
+
   return (<text ref={ref} 
     x={element.Position.x}
     y={element.Position.y}
     dominantBaseline="hanging"
     textAnchor="left"
+    onClick={()=>dispatch(select(element.elementID))}
     onMouseDown={dragAndDrop.onMouseDown} style={{
       fontFamily: element.fontFamily,
       fontSize: element.fontSize,

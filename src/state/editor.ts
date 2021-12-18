@@ -99,7 +99,11 @@ const cardsHistory = (state : CardsHistory, action : any) => {
   return state;
 };
 const selectedElementID = (state : string, action : any) => {
-  return state;
+  if (action.type === "CHANGE_SELECTED_ELEMENT_ID") {
+    return action.id;
+  } else {
+    return state;
+  }
 };
 const history = (state : History, action : any) => {
   return state;
@@ -133,6 +137,54 @@ const elements = (state : Element[], action : any) => {
           fontFamily: "serif"
         }
       ]);
+    case "ADD_RECTANGLE":
+      return state.concat([
+        {
+          elementID: uuidv4(),
+          type: ElementType.ARTOBJECT,
+          size: {
+            height: 15,
+            width: 20
+          },
+          Position: {
+            x: 10,
+            y: 200
+          },
+          artObjectType:ArtObjectType.RECTANGLE,
+        }
+     ]);
+     case "ADD_TRIANGLE":
+      return state.concat([
+        {
+          elementID: uuidv4(),
+          type: ElementType.ARTOBJECT,
+          size: {
+            height: 40,
+            width: 60
+          },
+          Position: {
+            x: 70,
+            y: 230
+          },
+          artObjectType:ArtObjectType.TRIANGLE,
+        }
+     ]);
+     case "ADD_CIRCLE":
+      return state.concat([
+        {
+          elementID: uuidv4(),
+          type: ElementType.ARTOBJECT,
+          size: {
+            height: 15,
+            width: 20
+          },
+          Position: {
+            x: 44,
+            y: 230
+          },
+          artObjectType:ArtObjectType.CIRCLE,
+        }
+     ]);
     case "DELETE_ELEMENT":
       return state.filter((p) => p.elementID !== action.id);
     case "MOVE_ELEMENT":

@@ -7,7 +7,7 @@ import { ArtObject } from "./ArtObjectComponent";
 type dragAndDrop = {
   element: Element;
   parentSize: Size;
-  ref: React.RefObject<any>
+  ref: React.RefObject<ArtObject>
 };
 
 export default function useDragAndDrop({ref, element, parentSize} : dragAndDrop) {

@@ -4,11 +4,23 @@ import ArtObjectComponent from "./ArtObjectComponent";
 import TextElementComponent from "./TextElement";
 
 type WorkspaceProps = {
+  selectedElementID: string;
   size: Size;
   elements: Element[];
 };
 
-const Workspace: FC<WorkspaceProps> = ({elements, size} : WorkspaceProps) => {
+export function getSelectedElement(elements : Element[], id : string) {
+  var selectedElement: Element | undefined;
+  selectedElement = elements.find((element:Element)=>{if (element.elementID===id) return element})
+  console.log(id)
+  if (selectedElement === undefined) 
+    return null;
+  else 
+    return selectedElement;
+  }
+
+const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : WorkspaceProps) => {
+  var selectedElement=getSelectedElement(elements,selectedElementID);
   return (<div style={{
       width: size.width + "px",
       height: size.height + "px",
@@ -16,6 +28,14 @@ const Workspace: FC<WorkspaceProps> = ({elements, size} : WorkspaceProps) => {
       border: "1px lightgray"
     }}>
     <svg viewBox={`0 0 ${size.width} ${size.height}`}>
+      {(selectedElement !== null) ? <rect 
+        x={selectedElement.Position.x} y={selectedElement.Position.y} 
+        width={selectedElement.size.width} 
+        height={selectedElement.size.height} 
+        stroke="blue"
+        stroke-width="1"
+        fill-opacity="0"
+        />:<></>}
       {
         elements.map((element : Element) => {
           switch (element.type) {
