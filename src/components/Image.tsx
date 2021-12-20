@@ -1,13 +1,27 @@
-import React, { FC } from 'react'
-import { ImageElement, Size } from '../model/Types';
+import React, {FC} from "react";
+import { useDispatch } from "react-redux";
+import {ImageElement, Size} from "../model/Types";
+import { select } from "./TextElement";
+import useDragAndDrop from "./useDragAndDrop";
 type ImageComponentProps = {
-    parentSize: Size;
-    element: ImageElement;
-  };
-  const ImageComponent: FC<ImageComponentProps> = ({parentSize, element} : ImageComponentProps) => {
-    return (
-      <image xlinkHref={element.source} x={element.Position.x+'px'} y={element.Position.y+'px'} height={element.size.height+'px'} width={element.size.width+'px'}/>
-    )
-}
+  parentSize: Size;
+  element: ImageElement;
+};
+const ImageComponent: FC<ImageComponentProps> = ({parentSize, element} : ImageComponentProps) => {
+  const dispatch = useDispatch();
+  const {onMouseDown} = useDragAndDrop({element, parentSize});
+  
 
-export default ImageComponent
+
+  return (<image xlinkHref={element.source}
+    onClick={()=>dispatch(select(element.elementID))}
+    onMouseDown={onMouseDown}
+    style={{cursor: "pointer"}}
+    x={element.Position.x + "px"} 
+    y={element.Position.y + "px"} 
+    height={element.size.height + "px"} 
+    width={element.size.width + "px"}
+  />);
+};
+
+export default ImageComponent;

@@ -18,11 +18,11 @@ const Menu: FC<MenuProps> = ({bars} : MenuProps) => {
       bars.map((bar : {
         placeholder: string;
         content: Content[];
-      }, index : number) => (<div key={index}>
-        <Dropdown isActive={active === index
+      }, index : number) => (
+        <Dropdown key={index} isActive={active === index
             ? 1
             : 0} placeholder={bar.placeholder} content={bar.content} setActive={setActive} index={index}/>
-      </div>))
+          ))
     }
   </div>);
 };

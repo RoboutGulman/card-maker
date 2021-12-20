@@ -25,8 +25,8 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
     <div className={classes.drop_down}>
       <ul className={classes.ul}>
         {
-          content && content.map((item : Content, key : number) => {
-            return (<MyButton text={item.title} onClick={() => {
+          content && content.map((item : Content, index : number) => {
+            return (<MyButton key={index} text={item.title} onClick={() => {
                 setActive(-1);
                 dispatch(item.func());
               }}/>);

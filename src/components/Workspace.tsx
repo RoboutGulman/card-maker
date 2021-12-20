@@ -1,7 +1,6 @@
 import {FC} from "react";
 import {Element, ElementType, Size} from "../model/Types";
 import ArtObjectComponent from "./ArtObjectComponent";
-import { SelectImageButton } from "./useImageLoader";
 import TextElementComponent from "./TextElement";
 import ImageComponent from "./Image";
 
@@ -11,9 +10,9 @@ type WorkspaceProps = {
   elements: Element[];
 };
 
-export function getSelectedElement(elements : Element[], id : string) {
+export function getElement(elements : Element[], id : string) {
   var selectedElement: Element | undefined;
-  selectedElement = elements.find((element:Element)=>{if (element.elementID===id) return element})
+  selectedElement = elements.find((element:Element)=>{if (element.elementID===id) {return element} else return null})
   if (selectedElement === undefined) 
     return null;
   else 
@@ -21,7 +20,7 @@ export function getSelectedElement(elements : Element[], id : string) {
   }
 
 const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : WorkspaceProps) => {
-  var selectedElement=getSelectedElement(elements,selectedElementID);
+  var selectedElement=getElement(elements,selectedElementID);
   return (<div style={{
       width: size.width + "px",
       height: size.height + "px",
@@ -35,8 +34,8 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : Wor
         width={selectedElement.size.width} 
         height={selectedElement.size.height} 
         stroke="blue"
-        stroke-width="1"
-        fill-opacity="0"
+        strokeWidth="1"
+        fillOpacity="0"
         />:<></>}
       {
         elements.map((element : Element) => {
@@ -47,6 +46,8 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : Wor
               return (<ArtObjectComponent key={element.elementID} element={element} parentSize={size}/>);
             case ElementType.IMAGE:
               return (<ImageComponent key={element.elementID} element={element} parentSize={size}/>)
+            default: 
+              return <> </>
           }
         })
       }

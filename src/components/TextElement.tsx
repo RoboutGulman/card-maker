@@ -1,31 +1,39 @@
 import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {Size, TextElement} from "../model/Types";
-import MyButton from "./UserInterface/MyButton/MyButton";
 import useDragAndDrop from "./useDragAndDrop";
 
 export function select(id: string) {
   return {type: "CHANGE_SELECTED_ELEMENT_ID", id: id}
 }
 
-type ElementProps = {
+type TextElementProps = {
   parentSize: Size;
   element: TextElement;
 };
-const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementProps) => {
+const TextElementComponent: FC<TextElementProps> = ({parentSize, element} : TextElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
 
-  const dragAndDrop = useDragAndDrop({element, parentSize, ref});
+  const {onMouseDown} = useDragAndDrop({element, parentSize});
 
-  useEffect(() => {
-    document.addEventListener("mousemove", dragAndDrop.onMouseMove);
-    document.addEventListener("mouseup", dragAndDrop.onMouseUp);
-    return function cleanup() {
-      document.removeEventListener("mousemove", dragAndDrop.onMouseMove);
-      document.removeEventListener("mouseup", dragAndDrop.onMouseUp);
-    };
-  });
+  function changeSize (id: string, height: number, width: number){
+    return {type: "CHANGE_ELEMENT_SIZE", id: id, height:height, width:width};
+  }
+  
+  useEffect(()=>{
+    const Rect=ref?.current?.getBoundingClientRect()
+    const right=Rect?.right
+    const left=Rect?.left
+    const bottom=Rect?.bottom
+    const top=Rect?.top
+    var width=0
+    if (right!=null&&left!=null){width=right-left}
+    var height=0
+    if (bottom!=null&&top!=null){height=bottom-top}
+    dispatch(changeSize(element.elementID, height, width))
+  }, [element.textContent])
+
 
   function del(id : string) {
     return {type: "DELETE_ELEMENT", id: id};
@@ -38,7 +46,7 @@ const TextElementComponent: FC<ElementProps> = ({parentSize, element} : ElementP
     dominantBaseline="hanging"
     textAnchor="left"
     onClick={()=>dispatch(select(element.elementID))}
-    onMouseDown={dragAndDrop.onMouseDown} style={{
+    onMouseDown={onMouseDown} style={{
       fontFamily: element.fontFamily,
       fontSize: element.fontSize,
       cursor: "pointer",

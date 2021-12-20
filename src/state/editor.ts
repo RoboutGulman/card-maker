@@ -152,7 +152,15 @@ const elements = (state : Element[], action : any) => {
           },
           source:action.source,
         }        
-      ])
+      ]);
+    case "CHANGE_ELEMENT_SIZE":
+      return state.map((element:Element)=>{
+        if (element.elementID === action.id) {
+          element.size.height=action.height; 
+          element.size.width=action.width
+          return element} else 
+          return element
+      })
     case "ADD_RECTANGLE":
       return state.concat([
         {
