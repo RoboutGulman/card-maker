@@ -3,6 +3,7 @@ import Menu from "../UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
 import Workspace from "../Workspace";
+import { SelectImageButton } from "../useImageLoader";
 
 function addText(textContent : string) {
   return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
@@ -73,6 +74,9 @@ const Editor = ({editor} : any) => {
     <div>
       <Menu bars={bars}></Menu>
     </div>
+    <div className={classes.border}></div>
+    <SelectImageButton></SelectImageButton>
+    <div className={classes.border}></div>
     <div className={classes.workspace}>
       <Workspace selectedElementID={editor.selectedElementID}size={editor.card.size} elements={editor.card.elements}/>
     </div>

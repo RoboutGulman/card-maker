@@ -1,12 +1,10 @@
 import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {Size, TextElement} from "../model/Types";
-import MyButton from "./UserInterface/button/MyButton";
+import MyButton from "./UserInterface/MyButton/MyButton";
 import useDragAndDrop from "./useDragAndDrop";
 
 export function select(id: string) {
-  console.log('select')
-  console.log(id)
   return {type: "CHANGE_SELECTED_ELEMENT_ID", id: id}
 }
 

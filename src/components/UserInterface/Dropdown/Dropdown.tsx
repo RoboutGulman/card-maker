@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {useDispatch} from "react-redux";
-import MyButton from "../button/MyButton";
+import MyButton from "../MyButton/MyButton";
 import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
 interface DropDownProps {

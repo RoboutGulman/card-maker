@@ -137,6 +137,22 @@ const elements = (state : Element[], action : any) => {
           fontFamily: "serif"
         }
       ]);
+    case "ADD_IMAGE_ELEMENT":
+      return state.concat([
+        {
+          elementID: uuidv4(),
+          type: ElementType.IMAGE,
+          size: {
+            height: 80,
+            width: 100
+          },
+          Position: {
+            x: 40,
+            y: 150
+          },
+          source:action.source,
+        }        
+      ])
     case "ADD_RECTANGLE":
       return state.concat([
         {

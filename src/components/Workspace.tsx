@@ -1,7 +1,9 @@
 import {FC} from "react";
 import {Element, ElementType, Size} from "../model/Types";
 import ArtObjectComponent from "./ArtObjectComponent";
+import { SelectImageButton } from "./useImageLoader";
 import TextElementComponent from "./TextElement";
+import ImageComponent from "./Image";
 
 type WorkspaceProps = {
   selectedElementID: string;
@@ -12,7 +14,6 @@ type WorkspaceProps = {
 export function getSelectedElement(elements : Element[], id : string) {
   var selectedElement: Element | undefined;
   selectedElement = elements.find((element:Element)=>{if (element.elementID===id) return element})
-  console.log(id)
   if (selectedElement === undefined) 
     return null;
   else 
@@ -27,6 +28,7 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : Wor
       backgroundColor: "white",
       border: "1px lightgray"
     }}>
+      
     <svg viewBox={`0 0 ${size.width} ${size.height}`}>
       {(selectedElement !== null) ? <rect 
         x={selectedElement.Position.x} y={selectedElement.Position.y} 
@@ -43,6 +45,8 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : Wor
               return (<TextElementComponent key={element.elementID} element={element} parentSize={size}/>);
             case ElementType.ARTOBJECT:
               return (<ArtObjectComponent key={element.elementID} element={element} parentSize={size}/>);
+            case ElementType.IMAGE:
+              return (<ImageComponent key={element.elementID} element={element} parentSize={size}/>)
           }
         })
       }
