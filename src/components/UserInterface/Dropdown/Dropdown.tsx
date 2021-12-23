@@ -27,7 +27,7 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
       <ul className={classes.ul}>
         {
           content && content.map((item : Content, index : number) => {
-            if (item.title==="картинка") {return (<SelectImageButton></SelectImageButton>)} else
+            if (item.title==="картинка") {return (<SelectImageButton key={index}></SelectImageButton>)} else
             return (<MyButton key={index} text={item.title} onClick={() => {
                 setActive(-1);
                 dispatch(item.func());

@@ -6,19 +6,20 @@ import useDragAndDrop from "../../customHooks/useDragAndDrop";
 type ImageComponentProps = {
   parentSize: Size;
   element: ImageElement;
+  isActive: Boolean;
 };
-const ImageComponent: FC<ImageComponentProps> = ({parentSize, element} : ImageComponentProps) => {
+const ImageComponent: FC<ImageComponentProps> = ({parentSize, element, isActive} : ImageComponentProps) => {
   const dispatch = useDispatch();
-  const {onMouseDown} = useDragAndDrop({element, parentSize});
+  const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
   
 
 
   return (<image xlinkHref={element.source}
     onClick={()=>dispatch(select(element.elementID))}
-    onMouseDown={onMouseDown}
+    onMouseDown={isActive?onMouseDown:()=>{}}
     style={{cursor: "pointer"}}
-    x={element.Position.x + "px"} 
-    y={element.Position.y + "px"} 
+    x={Position.x + "px"} 
+    y={Position.y + "px"} 
     height={element.size.height + "px"} 
     width={element.size.width + "px"}
   />);

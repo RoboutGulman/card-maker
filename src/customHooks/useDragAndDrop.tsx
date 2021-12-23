@@ -6,10 +6,12 @@ import {Position, Element, Size} from "../model/Types";
 type dragAndDrop = {
   element: Element;
   parentSize: Size;
+  isActive: Boolean
 };
 
-export default function useDragAndDrop({element, parentSize} : dragAndDrop) {
+export default function useDragAndDrop({element, parentSize, isActive} : dragAndDrop) {
   const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
+  const [Position, setPosition] = useState({x: element.Position.x, y:  element.Position.y});
   const [dragging, setDragging] = useState(false);
   const dispatch = useDispatch();
 
@@ -18,8 +20,11 @@ export default function useDragAndDrop({element, parentSize} : dragAndDrop) {
   };
 
   useEffect(() => {
+    if (isActive===true)
+    {
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
+    }
     return function cleanup() {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
@@ -38,7 +43,7 @@ export default function useDragAndDrop({element, parentSize} : dragAndDrop) {
     e.stopPropagation();
     e.preventDefault();
   };
-  const onMouseMove = (e : any) => {
+  const onMouseMove = (e : any) => {  
     if (!dragging) 
       return;
     var x = e.pageX - relativePosition.x;
@@ -55,18 +60,20 @@ export default function useDragAndDrop({element, parentSize} : dragAndDrop) {
     if (y + element.size.height > parentSize.height) {
       y = parentSize.height - element.size.height;
     }
-    dispatch(move(element.elementID, {
-      x: x,
-      y: y
-    }));
+    setPosition({x:x,y:y})
     e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
+    if(dragging)
+    dispatch(move(element.elementID, {
+      x: Position.x,
+      y: Position.y
+    }));
     setDragging(false);
     e.stopPropagation();
     e.preventDefault();
   };
 
-  return {onMouseDown, onMouseMove, onMouseUp};
+  return {onMouseDown, Position};
 }

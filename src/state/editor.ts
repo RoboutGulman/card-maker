@@ -108,11 +108,14 @@ const selectedElementID = (state : string, action : any) => {
 const history = (state : History, action : any) => {
   switch (action.type) {
     case "SAVE_STATE":
-      return {undoStack:[...state.undoStack, action.editor], redoStack:[]}
+      return saveState(state, action)
     default:
       return state
   }
 };
+const saveState = (state: History, action: any) => {
+  return {undoStack:[...state.undoStack, action.card], redoStack:[]}
+}
 const card = (state : Card, action : any) => {
   return {
     cardID: state.cardID,

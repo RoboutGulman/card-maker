@@ -10,12 +10,13 @@ export function select(id: string) {
 type TextElementProps = {
   parentSize: Size;
   element: TextElement;
+  isActive: Boolean;
 };
-const TextElementComponent: FC<TextElementProps> = ({parentSize, element} : TextElementProps) => {
+const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActive} : TextElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
 
-  const {onMouseDown} = useDragAndDrop({element, parentSize});
+  const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
 
   function changeSize (id: string, height: number, width: number){
     return {type: "CHANGE_ELEMENT_SIZE", id: id, height:height, width:width};
@@ -41,12 +42,12 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element} : Text
 
 
   return (<text ref={ref} 
-    x={element.Position.x}
-    y={element.Position.y}
+    x={Position.x}
+    y={Position.y}
     dominantBaseline="hanging"
     textAnchor="left"
     onClick={()=>dispatch(select(element.elementID))}
-    onMouseDown={onMouseDown} style={{
+    onMouseDown={isActive?onMouseDown:()=>{}} style={{
       fontFamily: element.fontFamily,
       fontSize: element.fontSize,
       cursor: "pointer",

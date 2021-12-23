@@ -22,6 +22,16 @@ export function getElement(elements : Element[], id : string) {
 
 const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : WorkspaceProps) => {
   var selectedElement=getElement(card.elements,selectedElementID);
+  const dispatch = useDispatch()
+  
+  function saveState(card: Card){
+    return {type: "SAVE_STATE", card: card};
+  }
+
+  useEffect(()=>{
+    console.log("saveState")
+    dispatch(saveState(card))
+  }, [card.elements])
 
   return (<div style={{
       width: size.width + "px",
@@ -43,11 +53,11 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : Workspa
         card.elements.map((element : Element) => {
           switch (element.type) {
             case ElementType.TEXT:
-              return (<TextElementComponent key={element.elementID} element={element} parentSize={size}/>);
+              return (<TextElementComponent isActive={element.elementID===selectedElementID} key={element.elementID} element={element} parentSize={size}/>);
             case ElementType.ARTOBJECT:
-              return (<ArtObjectComponent key={element.elementID} element={element} parentSize={size}/>);
+              return (<ArtObjectComponent isActive={element.elementID===selectedElementID} key={element.elementID} element={element} parentSize={size}/>);
             case ElementType.IMAGE:
-              return (<ImageComponent key={element.elementID} element={element} parentSize={size}/>)
+              return (<ImageComponent isActive={element.elementID===selectedElementID} key={element.elementID} element={element} parentSize={size}/>)
             default: 
               return <> </>
           }
