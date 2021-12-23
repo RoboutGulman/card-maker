@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {Size, TextElement} from "../model/Types";
-import useDragAndDrop from "./useDragAndDrop";
+import {Size, TextElement} from "../../model/Types";
+import useDragAndDrop from "../../customHooks/useDragAndDrop";
 
 export function select(id: string) {
   return {type: "CHANGE_SELECTED_ELEMENT_ID", id: id}

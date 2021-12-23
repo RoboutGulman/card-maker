@@ -1,6 +1,6 @@
-import "./UserInterface/MyButton/MyButton.css"
+import "../components/UserInterface/MyButton/MyButton.css"
 import {RefObject, useEffect, useRef, useState} from "react";
-import MyButton from "./UserInterface/MyButton/MyButton";
+import MyButton from "../components/UserInterface/MyButton/MyButton";
 import { useDispatch } from "react-redux";
 
 function useImageLoader(inputRef: RefObject<HTMLInputElement|null>) {
@@ -58,7 +58,7 @@ function SelectImageButton() {
 	<MyButton
 		onClick={uploadImage}
 		loading={loading}
-		text={"Выбрать картинку"}
+		text={"картинка"}
 	/>
 	<input
 		ref={inputRef}

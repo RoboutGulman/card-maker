@@ -1,13 +1,14 @@
-import {FC} from "react";
-import {Element, ElementType, Size} from "../model/Types";
-import ArtObjectComponent from "./ArtObjectComponent";
-import TextElementComponent from "./TextElement";
-import ImageComponent from "./Image";
+import {FC, useEffect} from "react";
+import {Card, Element, ElementType, Size} from "../model/Types";
+import ArtObjectComponent from "./Elements/ArtObject";
+import TextElementComponent from "./Elements/TextElement";
+import ImageComponent from "./Elements/Image";
+import { useDispatch } from "react-redux";
 
 type WorkspaceProps = {
   selectedElementID: string;
   size: Size;
-  elements: Element[];
+  card: Card;
 };
 
 export function getElement(elements : Element[], id : string) {
@@ -19,8 +20,9 @@ export function getElement(elements : Element[], id : string) {
     return selectedElement;
   }
 
-const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : WorkspaceProps) => {
-  var selectedElement=getElement(elements,selectedElementID);
+const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : WorkspaceProps) => {
+  var selectedElement=getElement(card.elements,selectedElementID);
+
   return (<div style={{
       width: size.width + "px",
       height: size.height + "px",
@@ -38,7 +40,7 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, elements, size} : Wor
         fillOpacity="0"
         />:<></>}
       {
-        elements.map((element : Element) => {
+        card.elements.map((element : Element) => {
           switch (element.type) {
             case ElementType.TEXT:
               return (<TextElementComponent key={element.elementID} element={element} parentSize={size}/>);

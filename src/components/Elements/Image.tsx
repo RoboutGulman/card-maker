@@ -1,8 +1,8 @@
 import React, {FC} from "react";
 import { useDispatch } from "react-redux";
-import {ImageElement, Size} from "../model/Types";
+import {ImageElement, Size} from "../../model/Types";
 import { select } from "./TextElement";
-import useDragAndDrop from "./useDragAndDrop";
+import useDragAndDrop from "../../customHooks/useDragAndDrop";
 type ImageComponentProps = {
   parentSize: Size;
   element: ImageElement;

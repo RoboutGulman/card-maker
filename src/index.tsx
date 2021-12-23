@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
-import Editor from "./components/Editor/Editor";
+import Editor from "./Editor/Editor";
 import {store} from "./state/editor";
 
 ReactDOM.render(<Provider store={store}>

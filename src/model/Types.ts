@@ -7,7 +7,7 @@ export type Editor = {
 
 export type History = {
   undoStack: Card[];
-  currentState: number;
+  redoStack: Card[];
 };
 
 export type Card = {

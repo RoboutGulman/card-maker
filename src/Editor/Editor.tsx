@@ -1,9 +1,9 @@
 import React from "react";
-import Menu from "../UserInterface/Menu/Menu";
+import Menu from "../components/UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
-import Workspace from "../Workspace";
-import { SelectImageButton } from "../useImageLoader";
+import Workspace from "../components/Workspace";
+import { SelectImageButton } from "../customHooks/useImageLoader";
 
 function addText(textContent : string) {
   return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
@@ -62,6 +62,9 @@ const bars = [
       }, {
         title: "круг",
         func: () => {return {type: "ADD_CIRCLE"}}
+      }, {
+        title: "картинка",
+        func: () => {return {type: "ADD_CIRCLE"}}
       }
     ]
   }
@@ -75,10 +78,8 @@ const Editor = ({editor} : any) => {
       <Menu bars={bars}></Menu>
     </div>
     <div className={classes.border}></div>
-    <SelectImageButton></SelectImageButton>
-    <div className={classes.border}></div>
     <div className={classes.workspace}>
-      <Workspace selectedElementID={editor.selectedElementID}size={editor.card.size} elements={editor.card.elements}/>
+      <Workspace selectedElementID={editor.selectedElementID}size={editor.card.size} card={editor.card}/>
     </div>
   </div>);
 };

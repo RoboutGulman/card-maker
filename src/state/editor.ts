@@ -83,7 +83,7 @@ const editor: Editor = {
   selectedElementID: "65",
   history: {
     undoStack: [],
-    currentState: -1
+    redoStack: []
   }
 };
 
@@ -106,7 +106,12 @@ const selectedElementID = (state : string, action : any) => {
   }
 };
 const history = (state : History, action : any) => {
-  return state;
+  switch (action.type) {
+    case "SAVE_STATE":
+      return {undoStack:[...state.undoStack, action.editor], redoStack:[]}
+    default:
+      return state
+  }
 };
 const card = (state : Card, action : any) => {
   return {

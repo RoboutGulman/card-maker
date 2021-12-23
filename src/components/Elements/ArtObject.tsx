@@ -1,8 +1,8 @@
 import React, {FC} from "react";
 import { useDispatch } from "react-redux";
-import {Size, ArtObjectElement, ArtObjectType} from "../model/Types";
+import {Size, ArtObjectElement, ArtObjectType} from "../../model/Types";
 import { select } from "./TextElement";
-import useDragAndDrop from "./useDragAndDrop";
+import useDragAndDrop from "../../customHooks/useDragAndDrop";
 
 type ArtObjectProps = {
   parentSize: Size;
