@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {Position, Element, Size} from "../model/Types";
+import { ActionType } from "../state/editor";
 
 type dragAndDrop = {
   element: Element;
@@ -16,7 +17,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   const dispatch = useDispatch();
 
   const move = (id : string, Pos : Position) => {
-    return {type: "MOVE_ELEMENT", id: id, Position: Pos};
+    return {type: ActionType.MOVE_ELEMENT, id: id, Position: Pos};
   };
 
   useEffect(() => {

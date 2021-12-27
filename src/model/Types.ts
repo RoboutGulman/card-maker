@@ -1,7 +1,7 @@
 export type Editor = {
   cardsHistory: CardsHistory;
   card: Card;
-  selectedElementID: string;
+  selectedElementID: string|null;
   history: History;
 };
 

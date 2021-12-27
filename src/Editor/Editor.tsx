@@ -3,10 +3,10 @@ import Menu from "../components/UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
 import Workspace from "../components/Workspace";
-import {SelectImageButton} from "../customHooks/useImageLoader";
+import { ActionType } from "../state/editor";
 
 function addText(textContent : string) {
-  return {type: "ADD_TEXT_ELEMENT", textContent: textContent};
+  return {type: ActionType.ADD_TEXT_ELEMENT, textContent: textContent};
 }
 
 const bars = [
@@ -41,12 +41,12 @@ const bars = [
       {
         title: "undo",
         func: () => {
-          return {type: "UNDO"};
+          return {type: ActionType.UNDO};
         }
       }, {
         title: "redo",
         func: () => {
-          return {type: "REDO"};
+          return {type: ActionType.REDO};
         }
       }]
   }, {
@@ -84,22 +84,22 @@ const bars = [
       }, {
         title: "прямоугольник",
         func: () => {
-          return {type: "ADD_RECTANGLE"};
+          return {type: ActionType.ADD_RECTANGLE};
         }
       }, {
         title: "треугольник",
         func: () => {
-          return {type: "ADD_TRIANGLE"};
+          return {type: ActionType.ADD_TRIANGLE};
         }
       }, {
         title: "круг",
         func: () => {
-          return {type: "ADD_CIRCLE"};
+          return {type: ActionType.ADD_CIRCLE};
         }
       }, {
         title: "картинка",
         func: () => {
-          return {type: "ADD_CIRCLE"};
+          return {type: ActionType.ADD_IMAGE_ELEMENT};
         }
       }
     ]

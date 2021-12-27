@@ -2,9 +2,10 @@ import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {Size, TextElement} from "../../model/Types";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";
+import { ActionType } from "../../state/editor";
 
 export function select(id: string) {
-  return {type: "CHANGE_SELECTED_ELEMENT_ID", id: id}
+  return {type: ActionType.CHANGE_SELECTED_ELEMENT_ID, id: id}
 }
 
 type TextElementProps = {
@@ -15,11 +16,10 @@ type TextElementProps = {
 const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActive} : TextElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
-
   const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
 
   function changeSize (id: string, height: number, width: number){
-    return {type: "CHANGE_ELEMENT_SIZE", id: id, height:height, width:width};
+    return {type: ActionType.CALC_TEXT_SIZE, id: id, height:height, width:width};
   }
   
   useEffect(()=>{
@@ -37,7 +37,7 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActi
 
 
   function del(id : string) {
-    return {type: "DELETE_ELEMENT", id: id};
+    return {type: ActionType.DELETE_ELEMENT, id: id};
   }
 
 

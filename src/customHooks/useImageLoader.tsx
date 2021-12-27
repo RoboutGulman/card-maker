@@ -2,14 +2,15 @@ import "../components/UserInterface/MyButton/MyButton.css"
 import {RefObject, useEffect, useRef, useState} from "react";
 import MyButton from "../components/UserInterface/MyButton/MyButton";
 import { useDispatch } from "react-redux";
+import { ActionType } from "../state/editor";
 
 function useImageLoader(inputRef: RefObject<HTMLInputElement|null>) {
 	const dispatch = useDispatch();
 	const selectedImageUrlRef = useRef<string>()
 	const [loading, setLoading] = useState(false)
 	function addImage(source : string|undefined) {
-		return {type: "ADD_IMAGE_ELEMENT", source: source};
-	}
+		return {type: ActionType.ADD_IMAGE_ELEMENT, source: source};
+	} 
 
 
 	useEffect(() => {

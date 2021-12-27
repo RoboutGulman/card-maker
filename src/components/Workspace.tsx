@@ -22,15 +22,6 @@ export function getElement(elements : Element[], id : string) {
 
 const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : WorkspaceProps) => {
   var selectedElement=getElement(card.elements,selectedElementID);
-  const dispatch = useDispatch()
-  
-  function saveState(card: Card){
-    return {type: "SAVE_STATE", card: card};
-  }
-
-  useEffect(()=>{
-    dispatch(saveState(card))
-  }, [card.elements])
 
   return (<div style={{
       width: size.width + "px",
@@ -67,4 +58,3 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : Workspa
 };
 
 export default Workspace;
-/* картинки не через svg возможно */
