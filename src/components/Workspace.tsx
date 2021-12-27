@@ -29,7 +29,6 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : Workspa
   }
 
   useEffect(()=>{
-    console.log("saveState")
     dispatch(saveState(card))
   }, [card.elements])
 

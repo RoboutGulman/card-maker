@@ -20,7 +20,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   };
 
   useEffect(() => {
-    if (isActive===true)
+    if (isActive === true)
     {
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
