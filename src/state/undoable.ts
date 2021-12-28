@@ -21,7 +21,6 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
   const initialState = createEditor(createNewCard());
   function undo(editor : Editor): Editor {
     if (editor.history.undoStack.length > 0) {
-      console.log("undo")
       const previousHistoryState = editor.history.undoStack[editor.history.undoStack.length - 1];
       return {
         ...editor,
@@ -56,8 +55,10 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
     return editor;
   }
    function saveState(editor: Editor, newEditor: Editor): Editor {
-    if (editor !== newEditor) {
-      console.log("saveState")
+    if (editor.card !== newEditor.card) {
+      console.log("save state")
+      console.log(editor.card.elements)
+      console.log(newEditor.card.elements)
       return {
         ...newEditor,
         history: {
@@ -78,9 +79,13 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
     case ActionType.REDO:
       return redo(state);
     default: {
+      console.log("reducer")
+      console.log(state.card.elements)
+      const oldEditor=state
       const newEditor = reducer(state, action);
+      console.log(newEditor.card.elements)
       if (STATEFUL_ACTIONS.includes(action.type)) {
-        return saveState(state, newEditor);
+        return saveState(oldEditor, newEditor);
       }
       return newEditor;
     }

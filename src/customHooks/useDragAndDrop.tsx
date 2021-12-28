@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {Position, Element, Size} from "../model/Types";
-import { ActionType } from "../state/editor";
+import {ActionType} from "../state/editor";
 
 type dragAndDrop = {
   element: Element;
   parentSize: Size;
-  isActive: Boolean
+  isActive: Boolean;
 };
 
 export default function useDragAndDrop({element, parentSize, isActive} : dragAndDrop) {
   const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
-  const [Position, setPosition] = useState({x: element.Position.x, y:  element.Position.y});
+  const [Position, setPosition] = useState({x: element.Position.x, y: element.Position.y});
   const [dragging, setDragging] = useState(false);
   const dispatch = useDispatch();
 
@@ -21,10 +21,11 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   };
 
   useEffect(() => {
-    if (isActive === true)
-    {
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
+    if (!dragging) 
+      setPosition(element.Position);
+    if (isActive === true) {
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
     }
     return function cleanup() {
       document.removeEventListener("mousemove", onMouseMove);
@@ -44,7 +45,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
     e.stopPropagation();
     e.preventDefault();
   };
-  const onMouseMove = (e : any) => {  
+  const onMouseMove = (e : any) => {
     if (!dragging) 
       return;
     var x = e.pageX - relativePosition.x;
@@ -61,16 +62,16 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
     if (y + element.size.height > parentSize.height) {
       y = parentSize.height - element.size.height;
     }
-    setPosition({x:x,y:y})
+    setPosition({x: x, y: y});
     e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
-    if(dragging)
-    dispatch(move(element.elementID, {
-      x: Position.x,
-      y: Position.y
-    }));
+    if (dragging) 
+      dispatch(move(element.elementID, {
+        x: Position.x,
+        y: Position.y
+      }));
     setDragging(false);
     e.stopPropagation();
     e.preventDefault();

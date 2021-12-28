@@ -22,7 +22,8 @@ export enum ActionType {
   CHANGE_SELECTED_ELEMENT_ID ,
   ADD_IMAGE_ELEMENT,
   CHANGE_CARD_TITLE,
-  CALC_TEXT_SIZE
+  CALC_TEXT_SIZE,
+  EDIT_TEXT_CONTENT
 }
 
 export const STATEFUL_ACTIONS =[
@@ -34,14 +35,15 @@ export const STATEFUL_ACTIONS =[
   ActionType.ADD_RECTANGLE,
   ActionType.MOVE_ELEMENT,
   ActionType.DELETE_ELEMENT,
-  ActionType.CHANGE_ELEMENT_SIZE
+  ActionType.CHANGE_ELEMENT_SIZE,
+  ActionType.EDIT_TEXT_CONTENT
 ]
 
 export const editorReducer = (state = editor, action : any) => {
       return {
         history:  state.history,
         cardsHistory: cardsHistory(state.cardsHistory, action),
-        card: card(state.card, action),
+        card: card(state.card, state.selectedElementID, action),
         selectedElementID: selectedElementID(state.selectedElementID, action)
       };
 };
@@ -56,16 +58,16 @@ const selectedElementID = (state : string|null, action : any) => {
   }
 };
 
-const card = (state : Card, action : any) => {
+const card = (state : Card, selectedElementID: string|null, action : any) => {
   return {
     cardID: state.cardID,
     title: title(state.title, action),
     size: state.size,
     backgroundColor: state.backgroundColor,
-    elements: elements(state.elements, action)
+    elements: elements(state.elements, selectedElementID, action)
   };
 };
-const elements = (state : Element[], action : any) => {
+const elements = (state : Element[], selectedElementID:string|null ,action : any) => {
   switch (action.type) {
     case ActionType.ADD_TEXT_ELEMENT:
       return state.concat([
@@ -160,14 +162,25 @@ const elements = (state : Element[], action : any) => {
         }
       ]);
     case ActionType.DELETE_ELEMENT:
-      return state.filter((p) => p.elementID !== action.id);
+      return state.filter((p) => p.elementID !== selectedElementID);
     case ActionType.MOVE_ELEMENT:
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
-          element.Position = action.Position;
+          let newElement=Object.assign({},element)
+          newElement.Position = action.Position;
+          return newElement
         }
         return element;
       });
+    case ActionType.EDIT_TEXT_CONTENT:
+      return state.map((element : Element) => {
+        if (element.elementID === selectedElementID&&element.type===ElementType.TEXT) {
+          let newElement=Object.assign({},element)
+          newElement.textContent = action.textContent;
+          return newElement
+        }
+        return element;
+      });  
     default:
       return state;
   }
