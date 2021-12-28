@@ -16,41 +16,43 @@ type ArtObjectProps = {
 const ArtObjectComponent: FC<ArtObjectProps> = ({parentSize, element, isActive} : ArtObjectProps) => {
   const dispatch = useDispatch();
   const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
+  const {onMouseDownResize, resizePosition} = useResize({element, parentSize, isActive});
+  const size={width:element.size.width+resizePosition.x, height:element.size.height+resizePosition.y}
   
-  function getTrianglePoints(element : ArtObjectElement): string {
-    const firstPoint = `${Position.x},${Position.y + element.size.height}`;
-    const secondPoint = `${Position.x + element.size.width / 2},${Position.y}`;
-    const thirdPoint = `${Position.x + element.size.width},${Position.y + element.size.height}`;
+  function getTrianglePoints(): string {
+    const firstPoint = `${Position.x},${Position.y + size.height}`;
+    const secondPoint = `${Position.x + size.width / 2},${Position.y}`;
+    const thirdPoint = `${Position.x + size.width},${Position.y + size.height}`;
     return `${firstPoint} ${secondPoint} ${thirdPoint}`;
   }
 
-  function calculateCircle(element : ArtObjectElement) {
-    if (element.size.width < element.size.height) 
+  function calculateCircle() {
+    if (size.width < size.height) 
       return {
-        cx: Position.x + element.size.width / 2,
-        cy: Position.y + element.size.height / 2,
-        r: element.size.width / 2 - 1
+        cx: Position.x + size.width / 2,
+        cy: Position.y + size.height / 2,
+        r: size.width / 2 - 1
       };
     else 
       return {
-        cx: Position.x + element.size.width / 2,
-        cy: Position.y + element.size.height / 2,
-        r: element.size.height / 2 - 1
+        cx: Position.x + size.width / 2,
+        cy: Position.y + size.height / 2,
+        r: size.height / 2 - 1
       };
   }
   const getPrimitiveElement = () => {
     switch (element.artObjectType) {
       case ArtObjectType.RECTANGLE:
-        return (<rect onClick={() => dispatch(select(element.elementID))} x={Position.x} y={Position.y} width={element.size.width} height={element.size.height} fill={"green"} style={{
+        return (<rect onClick={() => dispatch(select(element.elementID))} x={Position.x} y={Position.y} width={size.width} height={size.height} fill={"green"} style={{
             cursor: "pointer"
           }}/>);
       case ArtObjectType.TRIANGLE:
-        return (<polygon onClick={() => dispatch(select(element.elementID))} points={getTrianglePoints(element)} fill={"green"} style={{
+        return (<polygon onClick={() => dispatch(select(element.elementID))} points={getTrianglePoints()} fill={"green"} style={{
             cursor: "pointer"
           }}/>);
       case ArtObjectType.CIRCLE:
         {
-          const properties = calculateCircle(element);
+          const properties = calculateCircle();
           return (<circle onClick={() => dispatch(select(element.elementID))} cx={properties.cx} cy={properties.cy} r={properties.r} fill={"green"} style={{
               cursor: "pointer"
             }}/>);
@@ -61,8 +63,9 @@ const ArtObjectComponent: FC<ArtObjectProps> = ({parentSize, element, isActive} 
   <>  {
     getPrimitiveElement()
   };
-  <Stroke onMouseDown={onMouseDown} isActive={isActive} position={element.Position} size={element.size}/>
-  <ResizeToken onMouseDown={onMouseDown} isActive={isActive} position={Position} size={element.size}/>
+  <Stroke onMouseDown={onMouseDown} isActive={isActive} position={Position} size={size}/>
+  <ResizeToken onMouseDown={onMouseDownResize} isActive={isActive} position={Position} size={size}/>
+
 </>);
 };
 

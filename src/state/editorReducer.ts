@@ -103,12 +103,13 @@ const elements = (state : Element[], selectedElementID:string|null ,action : any
           source: action.source
         }
       ]);
-    case ActionType.CHANGE_ELEMENT_SIZE&&ActionType.CALC_TEXT_SIZE:
+    case ActionType.CHANGE_ELEMENT_SIZE:
+    case ActionType.CALC_TEXT_SIZE:
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
-          element.size.height = action.height;
-          element.size.width = action.width;
-          return element;
+          let newElement=Object.assign({},element)
+          newElement.size = {height:action.height, width:action.width}
+          return newElement;
         } else 
           return element;
         }

@@ -1,6 +1,7 @@
-import React, {useEffect} from "react";
+import React, {RefObject, useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import { isConstructorDeclaration } from "typescript";
 import {Position, Element, Size} from "../model/Types";
 import {ActionType} from "../state/editorReducer";
 
@@ -9,22 +10,19 @@ type Resize = {
   parentSize: Size;
   isActive: Boolean;
 };
+export const resize = (id : string, width : number, height : number) => {
+  return {type: ActionType.CHANGE_ELEMENT_SIZE, id: id, height: height, width: width};
+};
 
 export default function useResize({element, parentSize, isActive} : Resize) {
   const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
-  const [resizePosition, setResizePosition] = useState({x: 0, y:0});
+  const [resizePosition, setResizePosition] = useState({x: 0, y: 0});
   const [dragging, setDragging] = useState(false);
   const dispatch = useDispatch();
 
-  const resize = (id : string, Size : Size) => {
-    return {type: ActionType.CHANGE_ELEMENT_SIZE, id: id, Size: Size};
-  };
-
   useEffect(() => {
-      console.log("resize")
-      console.log(resizePosition)
-    if (!dragging&&resizePosition.x!=0&&resizePosition.y!=0) 
-    setResizePosition({x:0, y:0});
+    //if (!dragging && resizePosition.x != 0 && resizePosition.y != 0) 
+    //  setResizePosition({x: 0, y: 0});
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
@@ -40,40 +38,32 @@ export default function useResize({element, parentSize, isActive} : Resize) {
     if (e.button !== 0) 
       return;
     setDragging(true);
-    setRelativePosition({
-      x: e.pageX - element.Position.x,
-      y: e.pageY - element.Position.y
-    });
+    setRelativePosition({x: e.pageX, y: e.pageY});
     e.stopPropagation();
     e.preventDefault();
   };
   const onMouseMove = (e : any) => {
     if (!dragging) 
       return;
-    var x = e.pageX - relativePosition.x;
-    if (x < 0) {
-      x = 0;
-    }
-    if (x + element.size.width > parentSize.width) {
-      x = parentSize.width - element.size.width;
+    var x = e.pageX - relativePosition.x;    
+    if (x + 5 > parentSize.width) {
+      x = parentSize.width - 5;
     }
     var y = e.pageY - relativePosition.y;
-    if (y < 0) {
-      y = 0;
-    }
-    if (y + element.size.height > parentSize.height) {
-      y = parentSize.height - element.size.height;
+    if (y + 5 > parentSize.height) {
+      y = parentSize.height - 5;
     }
     setResizePosition({x: x, y: y});
     e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
-    if (dragging) 
-      dispatch(resize(element.elementID, {
-        width: resizePosition.x+element.size.width,
-        height: resizePosition.y+element.size.height
-      }));
+    if (dragging) {
+      const width = resizePosition.x + element.size.width;
+      const height = resizePosition.y + element.size.height;
+      dispatch(resize(element.elementID, width, height));
+    }
+    setResizePosition({x: 0, y: 0});
     setDragging(false);
     e.stopPropagation();
     e.preventDefault();
