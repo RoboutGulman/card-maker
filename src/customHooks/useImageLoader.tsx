@@ -2,7 +2,7 @@ import "../components/UserInterface/MyButton/MyButton.css"
 import {RefObject, useEffect, useRef, useState} from "react";
 import MyButton from "../components/UserInterface/MyButton/MyButton";
 import { useDispatch } from "react-redux";
-import { ActionType } from "../state/editor";
+import { ActionType } from "../state/editorReducer";
 
 function useImageLoader(inputRef: RefObject<HTMLInputElement|null>) {
 	const dispatch = useDispatch();

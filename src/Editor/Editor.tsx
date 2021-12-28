@@ -3,7 +3,7 @@ import Menu from "../components/UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
 import Workspace from "../components/Workspace";
-import { ActionType } from "../state/editor";
+import { ActionType } from "../state/editorReducer";
 
 
 

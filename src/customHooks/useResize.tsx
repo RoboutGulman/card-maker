@@ -4,25 +4,27 @@ import {useDispatch} from "react-redux";
 import {Position, Element, Size} from "../model/Types";
 import {ActionType} from "../state/editorReducer";
 
-type dragAndDrop = {
+type Resize = {
   element: Element;
   parentSize: Size;
   isActive: Boolean;
 };
 
-export default function useDragAndDrop({element, parentSize, isActive} : dragAndDrop) {
+export default function useResize({element, parentSize, isActive} : Resize) {
   const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
-  const [Position, setPosition] = useState({x: element.Position.x, y: element.Position.y});
+  const [resizePosition, setResizePosition] = useState({x: 0, y:0});
   const [dragging, setDragging] = useState(false);
   const dispatch = useDispatch();
 
-  const move = (id : string, Pos : Position) => {
-    return {type: ActionType.MOVE_ELEMENT, id: id, Position: Pos};
+  const resize = (id : string, Size : Size) => {
+    return {type: ActionType.CHANGE_ELEMENT_SIZE, id: id, Size: Size};
   };
 
   useEffect(() => {
-    if (!dragging) 
-      setPosition(element.Position);
+      console.log("resize")
+      console.log(resizePosition)
+    if (!dragging&&resizePosition.x!=0&&resizePosition.y!=0) 
+    setResizePosition({x:0, y:0});
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
@@ -33,7 +35,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
     };
   });
 
-  const onMouseDown = (e : any) => {
+  const onMouseDownResize = (e : any) => {
     // only left mouse button
     if (e.button !== 0) 
       return;
@@ -62,20 +64,20 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
     if (y + element.size.height > parentSize.height) {
       y = parentSize.height - element.size.height;
     }
-    setPosition({x: x, y: y});
+    setResizePosition({x: x, y: y});
     e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
     if (dragging) 
-      dispatch(move(element.elementID, {
-        x: Position.x,
-        y: Position.y
+      dispatch(resize(element.elementID, {
+        width: resizePosition.x+element.size.width,
+        height: resizePosition.y+element.size.height
       }));
     setDragging(false);
     e.stopPropagation();
     e.preventDefault();
   };
 
-  return {onMouseDown, Position};
+  return {onMouseDownResize, resizePosition};
 }

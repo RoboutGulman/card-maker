@@ -2,7 +2,10 @@ import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {Size, TextElement} from "../../model/Types";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";
-import { ActionType } from "../../state/editor";
+import { ActionType } from "../../state/editorReducer";
+import Stroke from "./Stroke";
+import ResizeToken from "./ResizeToken";
+import useResize from "../../customHooks/useResize";
 
 export function select(id: string) {
   return {type: ActionType.CHANGE_SELECTED_ELEMENT_ID, id: id}
@@ -17,6 +20,7 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActi
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
   const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
+  
 
   function changeSize (id: string, height: number, width: number){
     return {type: ActionType.CALC_TEXT_SIZE, id: id, height:height, width:width};
@@ -35,32 +39,25 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActi
     dispatch(changeSize(element.elementID, height, width))
   }, [element.textContent])
 
-
-  function del(id : string) {
-    return {type: ActionType.DELETE_ELEMENT, id: id};
-  }
-
-
-  return (<text ref={ref} 
-    x={Position.x}
-    y={Position.y}
-    dominantBaseline="hanging"
-    textAnchor="left"
-    onClick={()=>dispatch(select(element.elementID))}
-    onMouseDown={isActive?onMouseDown:()=>{}} style={{
-      fontFamily: element.fontFamily,
-      fontSize: element.fontSize,
-      cursor: "pointer",
-      userSelect: 'none'
-    }} className="post">
+  return (
+  <>
+     <text ref={ref} 
+       x={Position.x}
+       y={Position.y}
+       dominantBaseline="hanging"
+       textAnchor="left"
+       onClick={()=>dispatch(select(element.elementID))}
+       style={{
+         fontFamily: element.fontFamily,
+         fontSize: element.fontSize,
+         cursor: "pointer",
+         userSelect: 'none'
+       }} className="post">
       {element.textContent}
-  </text>);
+    </text>
+    <Stroke onMouseDown={onMouseDown} isActive={isActive} position={Position} size={element.size}/>
+  </>);
 };
 
 export default TextElementComponent;
 
-/* обернуть драг энд дроп в пользовательский хук
-сделать функцию изменения глобальных данных, убрать локальную модель данныхм
-remove(element.elementID)
-действия 3 видов отноительно истории: те, которые записываются, не запиываются и заменяют предыдущее изменение истории
-multiline text tspan */

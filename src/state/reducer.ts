@@ -1,7 +1,7 @@
-import {editorReducer} from './editor';
-import undoable from './undoable';
+import {editorReducer} from './editorReducer';
+import historyReducer from './historyReducer';
 
-const reducer = undoable(editorReducer);
+const reducer = historyReducer(editorReducer);
 
 export default reducer;
 export type RootState = ReturnType<typeof reducer>;

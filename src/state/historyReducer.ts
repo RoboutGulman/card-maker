@@ -1,9 +1,9 @@
-import { editorReducer} from './editor';
+import { editorReducer} from './editorReducer';
 import { Card, Editor } from  '../model/Types';
-import { ActionType, STATEFUL_ACTIONS } from './editor';
+import { ActionType, STATEFUL_ACTIONS } from './editorReducer';
 import { editor } from './template';
 
-function undoable(reducer: typeof editorReducer): typeof editorReducer {
+function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
   function createEditor(card: Card): Editor {
     return {
       card,
@@ -56,9 +56,6 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
   }
    function saveState(editor: Editor, newEditor: Editor): Editor {
     if (editor.card !== newEditor.card) {
-      console.log("save state")
-      console.log(editor.card.elements)
-      console.log(newEditor.card.elements)
       return {
         ...newEditor,
         history: {
@@ -79,11 +76,8 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
     case ActionType.REDO:
       return redo(state);
     default: {
-      console.log("reducer")
-      console.log(state.card.elements)
       const oldEditor=state
       const newEditor = reducer(state, action);
-      console.log(newEditor.card.elements)
       if (STATEFUL_ACTIONS.includes(action.type)) {
         return saveState(oldEditor, newEditor);
       }
@@ -93,4 +87,4 @@ function undoable(reducer: typeof editorReducer): typeof editorReducer {
   };
 }
 
-export default undoable;
+export default historyReducer;

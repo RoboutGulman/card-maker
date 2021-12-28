@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {ActionType} from "../../../state/editor";
+import {ActionType} from "../../../state/editorReducer";
 import Dropdown from "../Dropdown/Dropdown";
 import classes from "./Menu.module.css";
 export type Content = {

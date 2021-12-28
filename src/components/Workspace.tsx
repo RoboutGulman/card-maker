@@ -21,24 +21,13 @@ export function getElement(elements : Element[], id : string) {
   }
 
 const Workspace: FC<WorkspaceProps> = ({selectedElementID, card, size} : WorkspaceProps) => {
-  var selectedElement=getElement(card.elements,selectedElementID);
-
   return (<div style={{
       width: size.width + "px",
       height: size.height + "px",
       backgroundColor: "white",
       border: "1px lightgray"
     }}>
-      
     <svg viewBox={`0 0 ${size.width} ${size.height}`}>
-      {(selectedElement !== null) ? <rect 
-        x={selectedElement.Position.x} y={selectedElement.Position.y} 
-        width={selectedElement.size.width} 
-        height={selectedElement.size.height} 
-        stroke="blue"
-        strokeWidth="1"
-        fillOpacity="0"
-        />:<></>}
       {
         card.elements.map((element : Element) => {
           switch (element.type) {
