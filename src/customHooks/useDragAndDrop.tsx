@@ -42,7 +42,6 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
       x: e.pageX - element.Position.x,
       y: e.pageY - element.Position.y
     });
-    e.stopPropagation();
     e.preventDefault();
   };
   const onMouseMove = (e : any) => {
@@ -63,7 +62,6 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
       y = parentSize.height - element.size.height;
     }
     setPosition({x: x, y: y});
-    e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
@@ -73,7 +71,6 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
         y: Position.y
       }));
     setDragging(false);
-    e.stopPropagation();
     e.preventDefault();
   };
 

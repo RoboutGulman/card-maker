@@ -39,7 +39,6 @@ export default function useResize({element, parentSize, isActive} : Resize) {
       return;
     setDragging(true);
     setRelativePosition({x: e.pageX, y: e.pageY});
-    e.stopPropagation();
     e.preventDefault();
   };
   const onMouseMove = (e : any) => {
@@ -54,7 +53,6 @@ export default function useResize({element, parentSize, isActive} : Resize) {
       y = parentSize.height - 5;
     }
     setResizePosition({x: x, y: y});
-    e.stopPropagation();
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
@@ -65,7 +63,6 @@ export default function useResize({element, parentSize, isActive} : Resize) {
     }
     setResizePosition({x: 0, y: 0});
     setDragging(false);
-    e.stopPropagation();
     e.preventDefault();
   };
 

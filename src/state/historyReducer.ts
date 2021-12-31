@@ -76,10 +76,9 @@ function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
     case ActionType.REDO:
       return redo(state);
     default: {
-      const oldEditor=state
       const newEditor = reducer(state, action);
       if (STATEFUL_ACTIONS.includes(action.type)) {
-        return saveState(oldEditor, newEditor);
+        return saveState(state, newEditor);
       }
       return newEditor;
     }

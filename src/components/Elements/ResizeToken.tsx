@@ -1,4 +1,4 @@
-import React, { FC, RefObject, useState } from 'react'
+import { FC } from 'react'
 import { Position, Size } from '../../model/Types';
 type StrokeProps = {
     isActive: Boolean;
@@ -6,12 +6,15 @@ type StrokeProps = {
     size: Size;
     onMouseDown: (e : any) => void;
   };
+const tokenSize={
+  width:8,
+  height:8
+}
 const ResizeToken: FC<StrokeProps> = ({onMouseDown, isActive, position, size} : StrokeProps) => {
-    const [selfPosition, setSelfPosition]=useState({x: position.x+size.width+8, y:0});
     return isActive
     ? (<circle 
-        cx={position.x+size.width+8} 
-        cy={position.y+size.height+8}
+        cx={position.x+size.width+tokenSize.width} 
+        cy={position.y+size.height+tokenSize.height}
         r="5" 
         stroke="blue" 
         strokeWidth="1" 
