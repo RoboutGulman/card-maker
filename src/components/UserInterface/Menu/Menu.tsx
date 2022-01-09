@@ -32,7 +32,7 @@ const Menu = () => {
         }, {
           title: "сохранить",
           func: () => {
-            return {type: "UNDEFINED"};
+            return {type: ActionType.SAVE_CARD};
           }
         }, {
           title: "о программе",

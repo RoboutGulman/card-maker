@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import MyButton from "../MyButton/MyButton";
 import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
-import { SelectImageButton } from "../../../customHooks/useImageLoader";
+import { SelectCardButton, SelectImageButton } from "../../../customHooks/useFileLoader";
 interface DropDownProps {
   isActive: number;
   placeholder: string;
@@ -27,7 +27,8 @@ const DropDown: FC<DropDownProps> = ({isActive, placeholder, content, setActive,
       <ul className={classes.ul}>
         {
           content && content.map((item : Content, index : number) => {
-            if (item.title==="картинка") {return (<SelectImageButton key={index}></SelectImageButton>)} else
+            if (item.title==="картинка") {return (<SelectImageButton key={index}></SelectImageButton>)}
+            if (item.title==="открыть") {return (<SelectCardButton key={index}></SelectCardButton>)}
             return (<MyButton key={index} text={item.title} onClick={() => {
                 setActive(-1);
                 dispatch(item.func());

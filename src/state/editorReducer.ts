@@ -1,13 +1,7 @@
-import {
-  ElementType,
-  CardsHistory,
-  Card,
-  Element,
-  ArtObjectType
-} from "../model/Types";
+import {ElementType, CardsHistory, Card, Element, ArtObjectType} from "../model/Types";
 import {v4 as uuidv4} from "uuid";
-import { editor } from "./template";
-
+import {editor} from "./template";
+import {readJsonConfigFile} from "typescript";
 
 export enum ActionType {
   UNDO,
@@ -19,14 +13,16 @@ export enum ActionType {
   MOVE_ELEMENT,
   DELETE_ELEMENT,
   CHANGE_ELEMENT_SIZE,
-  CHANGE_SELECTED_ELEMENT_ID ,
+  CHANGE_SELECTED_ELEMENT_ID,
   ADD_IMAGE_ELEMENT,
   CHANGE_CARD_TITLE,
   CALC_TEXT_SIZE,
-  EDIT_TEXT_CONTENT
+  EDIT_TEXT_CONTENT,
+  SAVE_CARD,
+  LOAD_CARD
 }
 
-export const STATEFUL_ACTIONS =[
+export const STATEFUL_ACTIONS = [
   ActionType.ADD_IMAGE_ELEMENT,
   ActionType.CHANGE_CARD_TITLE,
   ActionType.ADD_TEXT_ELEMENT,
@@ -36,38 +32,54 @@ export const STATEFUL_ACTIONS =[
   ActionType.MOVE_ELEMENT,
   ActionType.DELETE_ELEMENT,
   ActionType.CHANGE_ELEMENT_SIZE,
-  ActionType.EDIT_TEXT_CONTENT
-]
+  ActionType.EDIT_TEXT_CONTENT,
+  ActionType.LOAD_CARD
+];
 
 export const editorReducer = (state = editor, action : any) => {
-      return {
-        history:  state.history,
-        cardsHistory: cardsHistory(state.cardsHistory, action),
-        card: card(state.card, state.selectedElementID, action),
-        selectedElementID: selectedElementID(state.selectedElementID, action)
-      };
+  return {
+    history: state.history,
+    cardsHistory: cardsHistory(state.cardsHistory, action),
+    card: card(state.card, state.selectedElementID, action),
+    selectedElementID: selectedElementID(state.selectedElementID, action)
+  };
 };
 const cardsHistory = (state : CardsHistory, action : any) => {
   return state;
 };
-const selectedElementID = (state : string|null, action : any) => {
+const selectedElementID = (state : string | null, action : any) => {
   if (action.type === ActionType.CHANGE_SELECTED_ELEMENT_ID) {
     return action.id;
   } else {
     return state;
   }
 };
-
-const card = (state : Card, selectedElementID: string|null, action : any) => {
-  return {
-    cardID: state.cardID,
-    title: title(state.title, action),
-    size: state.size,
-    backgroundColor: state.backgroundColor,
-    elements: elements(state.elements, selectedElementID, action)
-  };
+const saveJsonFile = (card : Card) => {
+  const element = document.createElement("a");
+  const jsonFile = new Blob([JSON.stringify(card, null, 2)], {type: "application/json"});
+  element.href = URL.createObjectURL(jsonFile);
+  element.download = "userFile.json";
+  document.body.appendChild(element);
+  element.click();
 };
-const elements = (state : Element[], selectedElementID:string|null ,action : any) => {
+const card = (state : Card, selectedElementID : string | null, action : any) => {
+  switch (action.type) {
+    case ActionType.SAVE_CARD:
+      saveJsonFile(state);
+      return state;
+    case ActionType.LOAD_CARD:
+      return action.card
+    default:
+      return {
+        cardID: state.cardID,
+        title: title(state.title, action),
+        size: state.size,
+        backgroundColor: state.backgroundColor,
+        elements: elements(state.elements, selectedElementID, action)
+      };
+  }
+};
+const elements = (state : Element[], selectedElementID : string | null, action : any) => {
   switch (action.type) {
     case ActionType.ADD_TEXT_ELEMENT:
       return state.concat([
@@ -107,8 +119,11 @@ const elements = (state : Element[], selectedElementID:string|null ,action : any
     case ActionType.CALC_TEXT_SIZE:
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
-          let newElement=Object.assign({},element)
-          newElement.size = {height:action.height, width:action.width}
+          let newElement = Object.assign({}, element);
+          newElement.size = {
+            height: action.height,
+            width: action.width
+          };
           return newElement;
         } else 
           return element;
@@ -167,21 +182,21 @@ const elements = (state : Element[], selectedElementID:string|null ,action : any
     case ActionType.MOVE_ELEMENT:
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
-          let newElement=Object.assign({},element)
+          let newElement = Object.assign({}, element);
           newElement.Position = action.Position;
-          return newElement
+          return newElement;
         }
         return element;
       });
     case ActionType.EDIT_TEXT_CONTENT:
       return state.map((element : Element) => {
-        if (element.elementID === selectedElementID&&element.type===ElementType.TEXT) {
-          let newElement=Object.assign({},element)
+        if (element.elementID === selectedElementID && element.type === ElementType.TEXT) {
+          let newElement = Object.assign({}, element);
           newElement.textContent = action.textContent;
-          return newElement
+          return newElement;
         }
         return element;
-      });  
+      });
     default:
       return state;
   }
@@ -194,4 +209,3 @@ const title = (state : string, action : any) => {
     return state;
   }
 };
-

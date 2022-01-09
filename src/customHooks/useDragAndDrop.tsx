@@ -21,7 +21,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   };
 
   useEffect(() => {
-    if (!dragging) 
+    if(!dragging&&Position!=element.Position)
       setPosition(element.Position);
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
