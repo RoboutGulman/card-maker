@@ -21,7 +21,7 @@ const ImageComponent: FC<ImageComponentProps> = ({parentSize, element, isActive}
   <>  
     <image
       preserveAspectRatio="none"
-      xlinkHref={element.source}
+      href={element.source}
       onClick={()=>dispatch(select(element.elementID))}
       style={{cursor: "pointer"}}
       x={Position.x + "px"} 

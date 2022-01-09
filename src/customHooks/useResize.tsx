@@ -1,8 +1,7 @@
-import React, {RefObject, useEffect} from "react";
+import  { useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import { isConstructorDeclaration } from "typescript";
-import {Position, Element, Size} from "../model/Types";
+import {Element, Size} from "../model/Types";
 import {ActionType} from "../state/editorReducer";
 
 type Resize = {

@@ -4,8 +4,6 @@ import {Size, TextElement} from "../../model/Types";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";
 import { ActionType } from "../../state/editorReducer";
 import Stroke from "./Stroke";
-import ResizeToken from "./ResizeToken";
-import useResize from "../../customHooks/useResize";
 
 export function select(id: string) {
   return {type: ActionType.CHANGE_SELECTED_ELEMENT_ID, id: id}

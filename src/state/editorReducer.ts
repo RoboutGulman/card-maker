@@ -1,7 +1,6 @@
 import {ElementType, CardsHistory, Card, Element, ArtObjectType} from "../model/Types";
 import {v4 as uuidv4} from "uuid";
 import {editor} from "./template";
-import {readJsonConfigFile} from "typescript";
 
 export enum ActionType {
   UNDO,
@@ -39,14 +38,11 @@ export const STATEFUL_ACTIONS = [
 export const editorReducer = (state = editor, action : any) => {
   return {
     history: state.history,
-    cardsHistory: cardsHistory(state.cardsHistory, action),
     card: card(state.card, state.selectedElementID, action),
     selectedElementID: selectedElementID(state.selectedElementID, action)
   };
 };
-const cardsHistory = (state : CardsHistory, action : any) => {
-  return state;
-};
+
 const selectedElementID = (state : string | null, action : any) => {
   if (action.type === ActionType.CHANGE_SELECTED_ELEMENT_ID) {
     return action.id;
@@ -71,7 +67,6 @@ const card = (state : Card, selectedElementID : string | null, action : any) => 
       return action.card
     default:
       return {
-        cardID: state.cardID,
         title: title(state.title, action),
         size: state.size,
         backgroundColor: state.backgroundColor,

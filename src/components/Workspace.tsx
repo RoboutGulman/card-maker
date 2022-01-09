@@ -1,9 +1,8 @@
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import {Card, Element, ElementType, Size} from "../model/Types";
 import ArtObjectComponent from "./Elements/ArtObject";
 import TextElementComponent from "./Elements/TextElement";
 import ImageComponent from "./Elements/Image";
-import {useDispatch} from "react-redux";
 import MyButton from "./UserInterface/MyButton/MyButton";
 
 type WorkspaceProps = {

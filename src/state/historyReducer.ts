@@ -7,7 +7,6 @@ function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
   function createEditor(card: Card): Editor {
     return {
       card,
-      cardsHistory: {cards:[]},
       history: {
         undoStack: [],
         redoStack: [],

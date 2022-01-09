@@ -5,12 +5,8 @@ import {
     ArtObjectType
   } from "../model/Types";
 export const editor: Editor = {
-    cardsHistory: {
-      cards: ["42gwgpe"]
-    },
     card: {
       title: "my card",
-      cardID: "12grwggr",
       size: {
         height: 600,
         width: 800

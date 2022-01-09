@@ -1,5 +1,4 @@
 export type Editor = {
-  cardsHistory: CardsHistory;
   card: Card;
   selectedElementID: string|null;
   history: History;
@@ -12,7 +11,6 @@ export type History = {
 
 export type Card = {
   title: string;
-  cardID: string;
   size: Size;
   backgroundColor: Color;
   elements: Element[];
