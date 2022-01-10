@@ -2,21 +2,16 @@ import React from "react";
 import Menu from "../components/UserInterface/Menu/Menu";
 import classes from "./Editor.module.css";
 import {connect} from "react-redux";
-import Workspace from "../components/Workspace";
-import { ActionType } from "../state/editorReducer";
-
-
+import Workspace from "../components/Workspace/Workspace";
 
 const Editor = ({editor} : any) => {
   return (<div className={classes.app}>
     <div className={classes.title}>{editor.card.title}</div>
     <div className={classes.border}></div>
-    <div>
-      <Menu></Menu>
-    </div>
+    <Menu/>
     <div className={classes.border}></div>
     <div className={classes.workspace}>
-      <Workspace selectedElementID={editor.selectedElementID} size={editor.card.size} card={editor.card}/>
+      <Workspace selectedElementID={editor.selectedElementID} card={editor.card}/>
     </div>
   </div>);
 };

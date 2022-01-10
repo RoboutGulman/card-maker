@@ -4,6 +4,7 @@ import {
     ElementType,
     ArtObjectType
   } from "../model/Types";
+  
 export const editor: Editor = {
     card: {
       title: "my card",
