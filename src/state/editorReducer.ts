@@ -1,24 +1,33 @@
-import {ElementType, CardsHistory, Card, Element, ArtObjectType} from "../model/Types";
+import {
+  ElementType,
+  CardsHistory,
+  Card,
+  Element,
+  ArtObjectType,
+  Size
+} from "../model/Types";
 import {v4 as uuidv4} from "uuid";
-import {editor} from "./template";
+import {editor} from "./templates/template";
+import image from "./Image.jpg"
 
 export enum ActionType {
-  UNDO,
-  REDO,
   ADD_TEXT_ELEMENT,
   ADD_TRIANGLE,
   ADD_CIRCLE,
   ADD_RECTANGLE,
-  MOVE_ELEMENT,
-  DELETE_ELEMENT,
+  ADD_IMAGE_ELEMENT,
+  CALC_TEXT_SIZE,
   CHANGE_ELEMENT_SIZE,
   CHANGE_SELECTED_ELEMENT_ID,
-  ADD_IMAGE_ELEMENT,
   CHANGE_CARD_TITLE,
-  CALC_TEXT_SIZE,
+  CHANGE_CARD_SIZE,
+  DELETE_ELEMENT,
   EDIT_TEXT_CONTENT,
-  SAVE_CARD,
-  LOAD_CARD
+  LOAD_CARD,
+  MOVE_ELEMENT,
+  REDO,
+  UNDO,
+  SAVE_CARD
 }
 
 export const STATEFUL_ACTIONS = [
@@ -64,15 +73,21 @@ const card = (state : Card, selectedElementID : string | null, action : any) => 
       saveJsonFile(state);
       return state;
     case ActionType.LOAD_CARD:
-      return action.card
+      return action.card;
     default:
       return {
         title: title(state.title, action),
-        size: state.size,
+        size: size(state.size, action),
         backgroundColor: state.backgroundColor,
         elements: elements(state.elements, selectedElementID, action)
       };
   }
+};
+const size = (state : Size, action : any) => {
+  if (action.type === ActionType.CHANGE_CARD_SIZE) 
+    return action.size;
+  else 
+    return state;
 };
 const elements = (state : Element[], selectedElementID : string | null, action : any) => {
   switch (action.type) {
@@ -99,13 +114,10 @@ const elements = (state : Element[], selectedElementID : string | null, action :
         {
           elementID: uuidv4(),
           type: ElementType.IMAGE,
-          size: {
-            height: 80,
-            width: 100
-          },
+          size: action.size,
           Position: {
-            x: 40,
-            y: 150
+            x: 0,
+            y: 0
           },
           source: action.source
         }

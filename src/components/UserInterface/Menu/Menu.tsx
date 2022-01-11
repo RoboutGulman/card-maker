@@ -1,4 +1,5 @@
 import React, {FC, useState} from "react";
+import { Size } from "../../../model/Types";
 import {ActionType} from "../../../state/editorReducer";
 import Dropdown from "../Dropdown/Dropdown";
 import classes from "./Menu.module.css";
@@ -6,8 +7,10 @@ export type Content = {
   title: string;
   func: () => any;
 };
-
-const Menu = () => {
+type MenuProps = {
+  cardSize: Size
+}
+const Menu: FC<MenuProps> = ({cardSize} : MenuProps) => {
   function addText(textContent : string) {
     return {type: ActionType.ADD_TEXT_ELEMENT, textContent: textContent};
   }
@@ -132,7 +135,7 @@ const Menu = () => {
       bars.map((bar : {
         placeholder: string;
         content: Content[];
-      }, index : number) => (<Dropdown key={index} isActive={active === index
+      }, index : number) => (<Dropdown cardSize={cardSize} key={index} isActive={active === index
           ? 1
           : 0} placeholder={bar.placeholder} content={bar.content} setActive={setActive} index={index}/>))
     }

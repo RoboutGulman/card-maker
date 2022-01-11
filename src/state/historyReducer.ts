@@ -1,7 +1,7 @@
 import { editorReducer} from './editorReducer';
 import { Card, Editor } from  '../model/Types';
 import { ActionType, STATEFUL_ACTIONS } from './editorReducer';
-import { editor } from './template';
+import { editor } from './templates/template';
 
 function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
   function createEditor(card: Card): Editor {

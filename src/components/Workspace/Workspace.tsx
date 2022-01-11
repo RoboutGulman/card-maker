@@ -11,21 +11,17 @@ type WorkspaceProps = {
   card: Card;
 };
 export function save(size: Size) {
-  // Converting SVG to String 
       var stringobJ = new XMLSerializer();
         var svg = document.getElementById('svgcontent');
         if (svg===null) return
         var svgString = stringobJ.serializeToString(svg );
-  // IE9 doesn't allow standalone Data URLs
         svgString = '<?xml version="1.0"?>\n' + svgString ; 
   
-  // Creating an Image Element
         var image = new Image();
         image.src = 'data:image/svg+xml;base64,' + btoa(svgString);
-        image.width = size.width; 
-        image.height = size.height; // keep the height proportional
+        image.width = size.width;
+        image.height = size.height; 
 
-  // Creating Canvas Element 
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
@@ -34,8 +30,8 @@ export function save(size: Size) {
           canvas.height = image.height
           context?.drawImage(image, 0, 0);
           var a =  document.createElement('a');
-          a.download = "image.png"; //Saving in PNG
-          a.href = canvas.toDataURL('image/png'); //Saving in PNG
+          a.download = "image.png"; 
+          a.href = canvas.toDataURL('image/png');
           a.click();
         }
       }
@@ -60,7 +56,7 @@ const Workspace: FC<WorkspaceProps> = ({selectedElementID, card} : WorkspaceProp
   return (<div>
     <MyButton text="сохранить как" onClick={()=>save(card.size)}></MyButton>
     <MyButton text="открыть модальное окно" onClick={()=>{setModalAcive(true)}}></MyButton>
-    <Modal active={modalAcive} setActive={setModalAcive}> <p>1gmermer;gmrpgremg</p></Modal>
+    
     <div style={{
         width: card.size.width + "px",
         height: card.size.height + "px",

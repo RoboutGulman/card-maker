@@ -3,7 +3,7 @@ import {
     Color,
     ElementType,
     ArtObjectType
-  } from "../model/Types";
+  } from "../../model/Types";
   
 export const editor: Editor = {
     card: {

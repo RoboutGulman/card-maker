@@ -8,7 +8,7 @@ const Editor = ({editor} : any) => {
   return (<div className={classes.app}>
     <div className={classes.title}>{editor.card.title}</div>
     <div className={classes.border}></div>
-    <Menu/>
+    <Menu cardSize={editor.card.size}/>
     <div className={classes.border}></div>
     <div className={classes.workspace}>
       <Workspace selectedElementID={editor.selectedElementID} card={editor.card}/>
