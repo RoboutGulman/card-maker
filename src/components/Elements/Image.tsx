@@ -13,7 +13,7 @@ type ImageComponentProps = {
 };
 const ImageComponent: FC<ImageComponentProps> = ({parentSize, element, isActive} : ImageComponentProps) => {
   const dispatch = useDispatch();
-  const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
+  const {onMouseDown, position} = useDragAndDrop({element, parentSize, isActive});
   const {onMouseDownResize, resizePosition} = useResize({element, parentSize, isActive});
   const size={width:element.size.width+resizePosition.x, height:element.size.height+resizePosition.y}
 
@@ -24,13 +24,13 @@ const ImageComponent: FC<ImageComponentProps> = ({parentSize, element, isActive}
       href={element.source}
       onClick={()=>dispatch(select(element.elementID))}
       style={{cursor: "pointer"}}
-      x={Position.x + "px"} 
-      y={Position.y + "px"} 
+      x={position.x + "px"} 
+      y={position.y + "px"} 
       height={size.height + "px"} 
       width={size.width + "px"}
     />
-  <Stroke onMouseDown={onMouseDown} isActive={isActive} position={Position} size={size}/>
-  <ResizeToken onMouseDown={onMouseDownResize} isActive={isActive} position={Position} size={size}/>
+  <Stroke onMouseDown={onMouseDown} isActive={isActive} position={position} size={size}/>
+  <ResizeToken onMouseDown={onMouseDownResize} isActive={isActive} position={position} size={size}/>
   </>  
     );
 };

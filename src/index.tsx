@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import Editor from "./Editor/Editor";
 import store from "./state/store";
-import image from "./Image.jpg"
+
 
 ReactDOM.render(<Provider store={store}>
   <Editor/>

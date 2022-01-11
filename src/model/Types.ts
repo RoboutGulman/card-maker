@@ -12,7 +12,7 @@ export type History = {
 export type Card = {
   title: string;
   size: Size;
-  backgroundColor: Color;
+  backgroundColor: string;
   elements: Element[];
 };
 
@@ -26,7 +26,7 @@ export enum ElementType {
 export type CardElement = {
   elementID: string;
   size: Size;
-  Position: Position;
+  position: position;
   type: ElementType;
 };
 
@@ -53,7 +53,7 @@ export enum ArtObjectType {
   TRIANGLE
 }
 
-export type Position = {
+export type position = {
   x: number;
   y: number;
 };
@@ -77,11 +77,6 @@ export type CardID = {
   id: string;
 };
 
-export enum Color {
-  red,
-  green,
-  blue
-}
 
 export type CardsHistory = {
   cards: string[];

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {Position, Element, Size} from "../model/Types";
+import {position, Element, Size} from "../model/Types";
 import {ActionType} from "../state/editorReducer";
 
 type dragAndDrop = {
@@ -12,17 +12,17 @@ type dragAndDrop = {
 
 export default function useDragAndDrop({element, parentSize, isActive} : dragAndDrop) {
   const [relativePosition, setRelativePosition] = useState({x: 0, y: 0});
-  const [Position, setPosition] = useState({x: element.Position.x, y: element.Position.y});
+  const [position, setPosition] = useState({x: element.position.x, y: element.position.y});
   const [dragging, setDragging] = useState(false);
   const dispatch = useDispatch();
 
-  const move = (id : string, Pos : Position) => {
-    return {type: ActionType.MOVE_ELEMENT, id: id, Position: Pos};
+  const move = (id : string, Pos : position) => {
+    return {type: ActionType.MOVE_ELEMENT, id: id, position: Pos};
   };
 
   useEffect(() => {
-    if(!dragging&&Position!=element.Position)
-      setPosition(element.Position);
+    if(!dragging&&position!=element.position)
+      setPosition(element.position);
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
@@ -39,8 +39,8 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
       return;
     setDragging(true);
     setRelativePosition({
-      x: e.pageX - element.Position.x,
-      y: e.pageY - element.Position.y
+      x: e.pageX - element.position.x,
+      y: e.pageY - element.position.y
     });
     e.preventDefault();
   };
@@ -67,12 +67,12 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   const onMouseUp = (e : any) => {
     if (dragging) 
       dispatch(move(element.elementID, {
-        x: Position.x,
-        y: Position.y
+        x: position.x,
+        y: position.y
       }));
     setDragging(false);
     e.preventDefault();
   };
 
-  return {onMouseDown, Position};
+  return {onMouseDown, position};
 }

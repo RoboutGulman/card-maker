@@ -7,8 +7,7 @@ import {
   Size
 } from "../model/Types";
 import {v4 as uuidv4} from "uuid";
-import {editor} from "./templates/template";
-import image from "./Image.jpg"
+import { defEditor } from "./templates/default";
 
 export enum ActionType {
   ADD_TEXT_ELEMENT,
@@ -44,7 +43,7 @@ export const STATEFUL_ACTIONS = [
   ActionType.LOAD_CARD
 ];
 
-export const editorReducer = (state = editor, action : any) => {
+export const editorReducer = (state = defEditor, action : any) => {
   return {
     history: state.history,
     card: card(state.card, state.selectedElementID, action),
@@ -99,7 +98,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
             height: 100,
             width: 200
           },
-          Position: {
+          position: {
             x: 100,
             y: 100
           },
@@ -115,7 +114,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
           elementID: uuidv4(),
           type: ElementType.IMAGE,
           size: action.size,
-          Position: {
+          position: {
             x: 0,
             y: 0
           },
@@ -145,7 +144,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
             height: 15,
             width: 20
           },
-          Position: {
+          position: {
             x: 10,
             y: 200
           },
@@ -161,7 +160,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
             height: 40,
             width: 60
           },
-          Position: {
+          position: {
             x: 70,
             y: 230
           },
@@ -177,7 +176,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
             height: 15,
             width: 20
           },
-          Position: {
+          position: {
             x: 44,
             y: 230
           },
@@ -190,7 +189,7 @@ const elements = (state : Element[], selectedElementID : string | null, action :
       return state.map((element : Element) => {
         if (element.elementID === action.id) {
           let newElement = Object.assign({}, element);
-          newElement.Position = action.Position;
+          newElement.position = action.position;
           return newElement;
         }
         return element;

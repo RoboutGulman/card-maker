@@ -52,18 +52,13 @@ export function getElement(elements : Element[], id : string) {
   }
 
 const Workspace: FC<WorkspaceProps> = ({selectedElementID, card} : WorkspaceProps) => {
-  const [modalAcive, setModalAcive] = useState(false)
   return (<div>
     <MyButton text="сохранить как" onClick={()=>save(card.size)}></MyButton>
-    <MyButton text="открыть модальное окно" onClick={()=>{setModalAcive(true)}}></MyButton>
-    
     <div style={{
         width: card.size.width + "px",
         height: card.size.height + "px",
-        backgroundColor: "white",
-        border: "1px lightgray"
       }}>
-      <svg id="svgcontent" viewBox={`0 0 ${card.size.width} ${card.size.height}`}>
+      <svg id="svgcontent" style={{backgroundColor: `${card.backgroundColor}`}} viewBox={`0 0 ${card.size.width} ${card.size.height}`} >
         {
           card.elements.map((element : Element) => {
             switch (element.type) {

@@ -1,8 +1,8 @@
 import React, {FC} from "react";
-import {Position, Size} from "../../model/Types";
+import {position, Size} from "../../model/Types";
 type StrokeProps = {
   isActive: Boolean;
-  position: Position;
+  position: position;
   size: Size;
   onMouseDown: (e : any) => void;
 };

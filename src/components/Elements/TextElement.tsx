@@ -17,7 +17,7 @@ type TextElementProps = {
 const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActive} : TextElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
-  const {onMouseDown, Position} = useDragAndDrop({element, parentSize, isActive});
+  const {onMouseDown, position} = useDragAndDrop({element, parentSize, isActive});
   
 
   function changeSize (id: string, height: number, width: number){
@@ -40,8 +40,8 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActi
   return (
   <>
      <text ref={ref} 
-       x={Position.x}
-       y={Position.y}
+       x={position.x}
+       y={position.y}
        dominantBaseline="hanging"
        textAnchor="left"
        onClick={()=>dispatch(select(element.elementID))}
@@ -53,7 +53,7 @@ const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActi
        }} className="post">
       {element.textContent}
     </text>
-    <Stroke onMouseDown={onMouseDown} isActive={isActive} position={Position} size={element.size}/>
+    <Stroke onMouseDown={onMouseDown} isActive={isActive} position={position} size={element.size}/>
   </>);
 };
 

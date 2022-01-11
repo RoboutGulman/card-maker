@@ -1,9 +1,9 @@
 import {
     Editor,
-    Color,
     ElementType,
     ArtObjectType
   } from "../../model/Types";
+import image from "./test.jpg"
   
 export const editor: Editor = {
     card: {
@@ -12,7 +12,7 @@ export const editor: Editor = {
         height: 600,
         width: 800
       },
-      backgroundColor: Color.red,
+      backgroundColor: "white",
       elements: [
         {
           type: ElementType.TEXT,
@@ -21,7 +21,7 @@ export const editor: Editor = {
             height: 15,
             width: 20
           },
-          Position: {
+          position: {
             x: 15,
             y: 20
           },
@@ -35,7 +35,7 @@ export const editor: Editor = {
             height: 15,
             width: 20
           },
-          Position: {
+          position: {
             x: 44,
             y: 230
           },
@@ -47,7 +47,7 @@ export const editor: Editor = {
             height: 15,
             width: 20
           },
-          Position: {
+          position: {
             x: 10,
             y: 200
           },
@@ -59,11 +59,24 @@ export const editor: Editor = {
             height: 40,
             width: 60
           },
-          Position: {
+          position: {
             x: 70,
             y: 230
           },
           artObjectType: ArtObjectType.TRIANGLE
+        },
+        {
+          elementID: '36',
+          type: ElementType.IMAGE,
+          size: {
+            height:300,
+            width:400
+          },
+          position: {
+            x: 150,
+            y: 100
+          },
+          source: image
         }
       ]
     },
