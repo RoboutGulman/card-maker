@@ -9,7 +9,8 @@ import {
   changeElementSize,
   editTextContent,
   moveElement,
-  saveJsonFile
+  saveJsonFile,
+  setTemplate
 } from "../model/Editor/Editor";
 
 export enum ActionType {
@@ -30,7 +31,8 @@ export enum ActionType {
   REDO,
   UNDO,
   SAVE_CARD,
-  NEW_CARD
+  NEW_CARD,
+  SET_TEMPLATE
 }
 
 export const STATEFUL_ACTIONS = [
@@ -45,7 +47,8 @@ export const STATEFUL_ACTIONS = [
   ActionType.CHANGE_ELEMENT_SIZE,
   ActionType.EDIT_TEXT_CONTENT,
   ActionType.LOAD_CARD,
-  ActionType.NEW_CARD
+  ActionType.NEW_CARD,
+  ActionType.SET_TEMPLATE
 ];
 
 export const editorReducer = (state = defEditor, action : any) => {
@@ -66,6 +69,8 @@ const selectedElementID = (state : string | null, action : any) => {
 
 const card = (state : Card, selectedElementID : string | null, action : any) => {
   switch (action.type) {
+    case ActionType.SET_TEMPLATE:
+      return setTemplate(action);
     case ActionType.SAVE_CARD:
       saveJsonFile(state);
       return state;

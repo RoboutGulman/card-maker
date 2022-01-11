@@ -1,24 +1,10 @@
 import { editorReducer} from './editorReducer';
 import { Card, Editor } from  '../model/Types';
 import { ActionType, STATEFUL_ACTIONS } from './editorReducer';
-import { testEditor } from './templates/test';
 import { defEditor } from './templates/default';
 
 function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
-  function createEditor(card: Card): Editor {
-    return {
-      card,
-      history: {
-        undoStack: [],
-        redoStack: [],
-      },
-      selectedElementID: null,
-    };
-  }
-  function createNewCard(): Card {
-    return testEditor.card;
-  }
-  const initialState = createEditor(createNewCard());
+
   function undo(editor : Editor): Editor {
     if (editor.history.undoStack.length > 0) {
       const previousHistoryState = editor.history.undoStack[editor.history.undoStack.length - 1];

@@ -6,7 +6,8 @@ import classes from "./Dropdown.module.css";
 import {SelectCardButton, SelectImageButton} from "../../../customHooks/useFileLoader";
 import {Size} from "../../../model/Types";
 import CreateCardButton from "./CreateCardButton";
-import {saveCardAs} from "../../../model/components/Dropdown/Dropdown";
+import TemplatesButton from "./TemplatesButton";
+import SaveCardButton from "./SaveCardButton";
 
 interface DropDownProps {
   cardSize: Size;
@@ -42,7 +43,9 @@ const DropDown: FC<DropDownProps> = (props : DropDownProps) => {
               case "создать":
                 return (<CreateCardButton key={index} index={index} setActive={props.setActive} item={item}/>);
               case "сохранить как":
-                return (<MyButton key={index} text="сохранить как" onClick={() => saveCardAs(props.cardSize)}/>);
+                return <SaveCardButton cardSize={props.cardSize} index={index} setActive={props.setActive} item={item} key={index}/>;
+              case "шаблоны":
+                return <TemplatesButton index={index} setActive={props.setActive} item={item} key={index}/>
               default:
                 return (<MyButton key={index} text={item.title} onClick={() => {
                     props.setActive(-1);

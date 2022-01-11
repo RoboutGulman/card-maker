@@ -1,6 +1,13 @@
 import { Size } from "../../Types";
-
-export function saveCardAs(size: Size) {
+export enum formatType{
+  jpeg,
+  png
+}
+type saveCardAsArguments={
+  size: Size,
+  type:formatType,
+}
+export function saveCardAs({ size, type}: saveCardAsArguments) {
     var stringobJ = new XMLSerializer();
     var svg = document.getElementById('svgcontent');
     if (svg===null) return
@@ -18,10 +25,22 @@ export function saveCardAs(size: Size) {
     image.onload = function() {
       canvas.width = image.width
       canvas.height = image.height
-      context?.drawImage(image, 0, 0);
       var a =  document.createElement('a');
-      a.download = "image.png"; 
-      a.href = canvas.toDataURL('image/png');
+      console.log(type)
+      if (type == 1){
+        context?.drawImage(image, 0, 0);
+        a.download = "image.png"; 
+        a.href = canvas.toDataURL('image/png');
+      }
+      else{
+        if (context!=null){
+        context.fillStyle = '#fff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        context?.drawImage(image, 0, 0);
+        a.download = "image.jpeg";
+        a.href = canvas.toDataURL('image/jpeg');
+      }
       a.click();
     }
     canvas.onload=function() {

@@ -1,13 +1,12 @@
-import {ActionType} from "../../state/editorReducer";
 import {Card, ElementType, Element, ArtObjectType} from "../Types";
 import {v4 as uuidv4} from "uuid";
-
+import { testEditor } from "../../state/templates/test";
 
 export const saveJsonFile = (card : Card) => {
   const element = document.createElement("a");
   const jsonFile = new Blob([JSON.stringify(card, null, 2)], {type: "application/json"});
   element.href = URL.createObjectURL(jsonFile);
-  element.download = "userFile.json";
+  element.download = card.title+".json";
   document.body.appendChild(element);
   element.click();
 };
@@ -76,7 +75,7 @@ export const addRectangle = (state : Element[]) => {
   ]);
 };
 export const addTriangle = (state : Element[]) => {
-return state.concat([
+  return state.concat([
     {
       elementID: uuidv4(),
       type: ElementType.ARTOBJECT,
@@ -91,9 +90,9 @@ return state.concat([
       artObjectType: ArtObjectType.TRIANGLE
     }
   ]);
-}
+};
 export const addCircle = (state : Element[]) => {
-return state.concat([
+  return state.concat([
     {
       elementID: uuidv4(),
       type: ElementType.ARTOBJECT,
@@ -108,9 +107,9 @@ return state.concat([
       artObjectType: ArtObjectType.CIRCLE
     }
   ]);
-}
+};
 export const moveElement = (state : Element[], action : any) => {
-return state.map((element : Element) => {
+  return state.map((element : Element) => {
     if (element.elementID === action.id) {
       let newElement = Object.assign({}, element);
       newElement.position = action.position;
@@ -118,9 +117,9 @@ return state.map((element : Element) => {
     }
     return element;
   });
-}
+};
 export const editTextContent = (state : Element[], action : any, selectedElementID : string | null) => {
-return state.map((element : Element) => {
+  return state.map((element : Element) => {
     if (element.elementID === selectedElementID && element.type === ElementType.TEXT) {
       let newElement = Object.assign({}, element);
       newElement.textContent = action.textContent;
@@ -128,4 +127,11 @@ return state.map((element : Element) => {
     }
     return element;
   });
+};
+
+export const setTemplate = (action : any) => {
+    switch (action.index){
+      case 1:
+          return testEditor.card
+    }
 }

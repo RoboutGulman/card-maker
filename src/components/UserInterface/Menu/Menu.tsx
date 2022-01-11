@@ -43,6 +43,11 @@ const Menu: FC<MenuProps> = ({cardSize} : MenuProps) => {
             return {type: ActionType.SAVE_CARD};
           }
         }, {
+          title: "шаблоны",
+          func: () => {
+            return {type: "UNDEFINED"};
+          }
+        }, {
           title: "о программе",
           func: () => {
             return {type: "UNDEFINED"};
