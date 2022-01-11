@@ -1,13 +1,16 @@
+import {Card, Element, Size} from "../model/Types";
+import {defEditor} from "./templates/default";
 import {
-  ElementType,
-  CardsHistory,
-  Card,
-  Element,
-  ArtObjectType,
-  Size
-} from "../model/Types";
-import {v4 as uuidv4} from "uuid";
-import { defEditor } from "./templates/default";
+  addCircle,
+  addImageElement,
+  addRectangle,
+  addTextElement,
+  addTriangle,
+  changeElementSize,
+  editTextContent,
+  moveElement,
+  saveJsonFile
+} from "../model/Editor/Editor";
 
 export enum ActionType {
   ADD_TEXT_ELEMENT,
@@ -26,7 +29,8 @@ export enum ActionType {
   MOVE_ELEMENT,
   REDO,
   UNDO,
-  SAVE_CARD
+  SAVE_CARD,
+  NEW_CARD
 }
 
 export const STATEFUL_ACTIONS = [
@@ -40,7 +44,8 @@ export const STATEFUL_ACTIONS = [
   ActionType.DELETE_ELEMENT,
   ActionType.CHANGE_ELEMENT_SIZE,
   ActionType.EDIT_TEXT_CONTENT,
-  ActionType.LOAD_CARD
+  ActionType.LOAD_CARD,
+  ActionType.NEW_CARD
 ];
 
 export const editorReducer = (state = defEditor, action : any) => {
@@ -58,14 +63,7 @@ const selectedElementID = (state : string | null, action : any) => {
     return state;
   }
 };
-const saveJsonFile = (card : Card) => {
-  const element = document.createElement("a");
-  const jsonFile = new Blob([JSON.stringify(card, null, 2)], {type: "application/json"});
-  element.href = URL.createObjectURL(jsonFile);
-  element.download = "userFile.json";
-  document.body.appendChild(element);
-  element.click();
-};
+
 const card = (state : Card, selectedElementID : string | null, action : any) => {
   switch (action.type) {
     case ActionType.SAVE_CARD:
@@ -73,6 +71,8 @@ const card = (state : Card, selectedElementID : string | null, action : any) => 
       return state;
     case ActionType.LOAD_CARD:
       return action.card;
+    case ActionType.NEW_CARD:
+      return defEditor.card;
     default:
       return {
         title: title(state.title, action),
@@ -87,122 +87,29 @@ const size = (state : Size, action : any) => {
     return action.size;
   else 
     return state;
-};
+  }
+;
 const elements = (state : Element[], selectedElementID : string | null, action : any) => {
   switch (action.type) {
     case ActionType.ADD_TEXT_ELEMENT:
-      return state.concat([
-        {
-          elementID: uuidv4(),
-          size: {
-            height: 100,
-            width: 200
-          },
-          position: {
-            x: 100,
-            y: 100
-          },
-          type: ElementType.TEXT,
-          textContent: action.textContent,
-          fontSize: 15,
-          fontFamily: "serif"
-        }
-      ]);
+      return addTextElement(state, action);
     case ActionType.ADD_IMAGE_ELEMENT:
-      return state.concat([
-        {
-          elementID: uuidv4(),
-          type: ElementType.IMAGE,
-          size: action.size,
-          position: {
-            x: 0,
-            y: 0
-          },
-          source: action.source
-        }
-      ]);
+      return addImageElement(state, action);
     case ActionType.CHANGE_ELEMENT_SIZE:
     case ActionType.CALC_TEXT_SIZE:
-      return state.map((element : Element) => {
-        if (element.elementID === action.id) {
-          let newElement = Object.assign({}, element);
-          newElement.size = {
-            height: action.height,
-            width: action.width
-          };
-          return newElement;
-        } else 
-          return element;
-        }
-      );
+      return changeElementSize(state, action);
     case ActionType.ADD_RECTANGLE:
-      return state.concat([
-        {
-          elementID: uuidv4(),
-          type: ElementType.ARTOBJECT,
-          size: {
-            height: 15,
-            width: 20
-          },
-          position: {
-            x: 10,
-            y: 200
-          },
-          artObjectType: ArtObjectType.RECTANGLE
-        }
-      ]);
+      return addRectangle(state);
     case ActionType.ADD_TRIANGLE:
-      return state.concat([
-        {
-          elementID: uuidv4(),
-          type: ElementType.ARTOBJECT,
-          size: {
-            height: 40,
-            width: 60
-          },
-          position: {
-            x: 70,
-            y: 230
-          },
-          artObjectType: ArtObjectType.TRIANGLE
-        }
-      ]);
+      return addTriangle(state);
     case ActionType.ADD_CIRCLE:
-      return state.concat([
-        {
-          elementID: uuidv4(),
-          type: ElementType.ARTOBJECT,
-          size: {
-            height: 15,
-            width: 20
-          },
-          position: {
-            x: 44,
-            y: 230
-          },
-          artObjectType: ArtObjectType.CIRCLE
-        }
-      ]);
+      return addCircle(state);
     case ActionType.DELETE_ELEMENT:
       return state.filter((p) => p.elementID !== selectedElementID);
     case ActionType.MOVE_ELEMENT:
-      return state.map((element : Element) => {
-        if (element.elementID === action.id) {
-          let newElement = Object.assign({}, element);
-          newElement.position = action.position;
-          return newElement;
-        }
-        return element;
-      });
+      return moveElement(state, action);
     case ActionType.EDIT_TEXT_CONTENT:
-      return state.map((element : Element) => {
-        if (element.elementID === selectedElementID && element.type === ElementType.TEXT) {
-          let newElement = Object.assign({}, element);
-          newElement.textContent = action.textContent;
-          return newElement;
-        }
-        return element;
-      });
+      return editTextContent(state, action, selectedElementID);
     default:
       return state;
   }

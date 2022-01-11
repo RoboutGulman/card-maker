@@ -25,7 +25,7 @@ const Menu: FC<MenuProps> = ({cardSize} : MenuProps) => {
         {
           title: "создать",
           func: () => {
-            return {type: "UNDEFINED"};
+            return {type: ActionType.NEW_CARD};
           }
         }, {
           title: "открыть",
@@ -34,6 +34,11 @@ const Menu: FC<MenuProps> = ({cardSize} : MenuProps) => {
           }
         }, {
           title: "сохранить",
+          func: () => {
+            return {type: ActionType.SAVE_CARD};
+          }
+        }, {
+          title: "сохранить как",
           func: () => {
             return {type: ActionType.SAVE_CARD};
           }

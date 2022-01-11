@@ -2,39 +2,22 @@ import React, {FC, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {Size, TextElement} from "../../model/Types";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";
-import { ActionType } from "../../state/editorReducer";
 import Stroke from "./Stroke";
-
-export function select(id: string) {
-  return {type: ActionType.CHANGE_SELECTED_ELEMENT_ID, id: id}
-}
+import { calcTextSize, select } from "../../model/components/Elements/TextElement";
 
 type TextElementProps = {
   parentSize: Size;
   element: TextElement;
   isActive: Boolean;
 };
+
 const TextElementComponent: FC<TextElementProps> = ({parentSize, element, isActive} : TextElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<SVGTextElement>(null);
   const {onMouseDown, position} = useDragAndDrop({element, parentSize, isActive});
-  
 
-  function changeSize (id: string, height: number, width: number){
-    return {type: ActionType.CALC_TEXT_SIZE, id: id, height:height, width:width};
-  }
-  
   useEffect(()=>{
-    const Rect=ref?.current?.getBoundingClientRect()
-    const right=Rect?.right
-    const left=Rect?.left
-    const bottom=Rect?.bottom
-    const top=Rect?.top
-    var width=0
-    if (right!=null&&left!=null){width=right-left}
-    var height=0
-    if (bottom!=null&&top!=null){height=bottom-top}
-    dispatch(changeSize(element.elementID, height, width))
+    calcTextSize(element.elementID, ref, dispatch)
   }, [element.textContent])
 
   return (

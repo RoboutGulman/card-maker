@@ -3,8 +3,11 @@ import {useDispatch} from "react-redux";
 import MyButton from "../MyButton/MyButton";
 import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
-import { SelectCardButton, SelectImageButton } from "../../../customHooks/useFileLoader";
-import { Size } from "../../../model/Types";
+import {SelectCardButton, SelectImageButton} from "../../../customHooks/useFileLoader";
+import {Size} from "../../../model/Types";
+import CreateCardButton from "./CreateCardButton";
+import {saveCardAs} from "../../../model/components/Dropdown/Dropdown";
+
 interface DropDownProps {
   cardSize: Size;
   isActive: number;
@@ -13,28 +16,39 @@ interface DropDownProps {
   setActive: (num : number) => void;
   index: number;
 }
-const DropDown: FC<DropDownProps> = ({cardSize, isActive, placeholder, content, setActive, index} : DropDownProps) => {
+
+const DropDown: FC<DropDownProps> = (props : DropDownProps) => {
   const dispatch = useDispatch();
-  return (<div className={isActive
+
+  return (<div className={props.isActive
       ? classes.wrapper_active + " " + classes.wrapper
       : classes.wrapper
 }>
-    <MyButton text={placeholder} onClick={() => {
-        setActive(
-          isActive
+    <MyButton text={props.placeholder} onClick={() => {
+        props.setActive(
+          props.isActive
           ? -1
-          : index);
+          : props.index);
       }}/>
     <div className={classes.drop_down}>
       <ul className={classes.ul}>
         {
-          content && content.map((item : Content, index : number) => {
-            if (item.title==="картинка") {return (<SelectImageButton cardSize={cardSize} key={index}></SelectImageButton>)}
-            if (item.title==="открыть") {return (<SelectCardButton key={index}></SelectCardButton>)}
-            return (<MyButton key={index} text={item.title} onClick={() => {
-                setActive(-1);
-                dispatch(item.func());
-              }}/>);
+          props.content && props.content.map((item : Content, index : number) => {
+            switch (item.title) {
+              case "картинка":
+                return (<SelectImageButton cardSize={props.cardSize} key={index}/>);
+              case "открыть":
+                return <SelectCardButton key={index}/>;
+              case "создать":
+                return (<CreateCardButton key={index} index={index} setActive={props.setActive} item={item}/>);
+              case "сохранить как":
+                return (<MyButton key={index} text="сохранить как" onClick={() => saveCardAs(props.cardSize)}/>);
+              default:
+                return (<MyButton key={index} text={item.title} onClick={() => {
+                    props.setActive(-1);
+                    dispatch(item.func());
+                  }}/>);
+            }
           })
         }
       </ul>

@@ -1,4 +1,4 @@
-import {Editor } from "../../model/Types";
+import {Editor} from "../../model/Types";
 
 export const defEditor: Editor = {
     card: {

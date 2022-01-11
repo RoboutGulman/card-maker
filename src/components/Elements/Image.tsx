@@ -1,11 +1,11 @@
 import React, {FC, useRef} from "react";
 import { useDispatch } from "react-redux";
 import {ImageElement, Size} from "../../model/Types";
-import { select } from "./TextElement";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";
 import Stroke from "./Stroke";
 import ResizeToken from "./ResizeToken";
 import useResize from "../../customHooks/useResize";
+import { select } from "../../model/components/Elements/TextElement";
 type ImageComponentProps = {
   parentSize: Size;
   element: ImageElement;

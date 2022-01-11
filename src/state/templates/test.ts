@@ -5,7 +5,7 @@ import {
   } from "../../model/Types";
 import image from "./test.jpg"
   
-export const editor: Editor = {
+export const testEditor: Editor = {
     card: {
       title: "my card",
       size: {
