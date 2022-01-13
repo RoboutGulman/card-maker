@@ -1,60 +1,10 @@
 import { editorReducer} from './editorReducer';
-import { Card, Editor } from  '../model/Types';
+import { Editor } from  '../model/Types';
 import { ActionType, STATEFUL_ACTIONS } from './editorReducer';
 import { defEditor } from './templates/default';
+import { redo, saveState, undo } from '../model/reducers/History/History';
 
 function historyReducer(reducer: typeof editorReducer): typeof editorReducer {
-
-  function undo(editor : Editor): Editor {
-    if (editor.history.undoStack.length > 0) {
-      const previousHistoryState = editor.history.undoStack[editor.history.undoStack.length - 1];
-      return {
-        ...editor,
-        card: previousHistoryState,
-        history: {
-          undoStack: editor.history.undoStack.slice(0, editor.history.undoStack.length - 1),
-          redoStack: [
-            editor.card, ...editor.history.redoStack
-          ]
-        }
-      };
-    }
-    return editor;
-  }
-  function redo(editor : Editor): Editor {
-    if (editor.history.redoStack.length > 0) {
-      const nextHistoryState = editor.history.redoStack[0];
-  
-      return {
-        ...editor,
-        card: nextHistoryState,
-        history: {
-          undoStack: [
-            ...editor.history.undoStack,
-            editor.card
-          ],
-          redoStack: editor.history.redoStack.slice(1)
-        }
-      };
-    }
-  
-    return editor;
-  }
-   function saveState(editor: Editor, newEditor: Editor): Editor {
-    if (editor.card !== newEditor.card) {
-      return {
-        ...newEditor,
-        history: {
-          undoStack: newEditor.history.undoStack.length < 50
-            ? [...newEditor.history.undoStack, editor.card]
-            : [...newEditor.history.undoStack.slice(1), editor.card],
-          redoStack: [],
-        },
-      };
-    }
-  
-    return newEditor;
-  }
   return function (state = defEditor, action: any): Editor {
     switch (action.type) {
     case ActionType.UNDO:

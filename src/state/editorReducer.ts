@@ -11,7 +11,7 @@ import {
   moveElement,
   saveJsonFile,
   setTemplate
-} from "../model/Editor/Editor";
+} from "../model/reducers/Editor/Editor";
 
 export enum ActionType {
   ADD_TEXT_ELEMENT,

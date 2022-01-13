@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react'
-import { formatType, saveCardAs } from '../../../model/components/Dropdown/Dropdown';
-import { Size } from '../../../model/Types';
-import { Content } from '../Menu/Menu';
-import Modal from '../Modal/Modal';
-import MyButton from '../MyButton/MyButton';
+import { formatType, saveCardAs } from '../../../../model/components/Dropdown/Dropdown';
+import { Size } from '../../../../model/Types';
+import { Content } from '../../Menu/Menu';
+import Modal from '../../Modal/Modal';
+import MyButton from '../../MyButton/MyButton';
 type SaveCardButtonProps={
     index:number,
     setActive:(a:number)=>void,
@@ -16,7 +16,7 @@ const SaveCardButton: FC<SaveCardButtonProps> = ({index, setActive, item, cardSi
     return (
         <div>
             <Modal active={modalAcive} setActive={setModalActive}>
-                <p>Выберите формат</p>
+                <div style={{font: '600 14px Arial'}}><p>Выберите формат</p></div>
                 <div><MyButton
                   text="png" 
                   onClick={()=>{

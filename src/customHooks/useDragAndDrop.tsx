@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {position, Element, Size} from "../model/Types";
@@ -21,7 +21,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   };
 
   useEffect(() => {
-    if(!dragging&&position!=element.position)
+    if (!dragging && position !== element.position) 
       setPosition(element.position);
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
@@ -34,7 +34,6 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
   });
 
   const onMouseDown = (e : any) => {
-    // only left mouse button
     if (e.button !== 0) 
       return;
     setDragging(true);
@@ -48,19 +47,7 @@ export default function useDragAndDrop({element, parentSize, isActive} : dragAnd
     if (!dragging) 
       return;
     var x = e.pageX - relativePosition.x;
-    if (x < 0) {
-      x = 0;
-    }
-    if (x + element.size.width > parentSize.width) {
-      x = parentSize.width - element.size.width;
-    }
     var y = e.pageY - relativePosition.y;
-    if (y < 0) {
-      y = 0;
-    }
-    if (y + element.size.height > parentSize.height) {
-      y = parentSize.height - element.size.height;
-    }
     setPosition({x: x, y: y});
     e.preventDefault();
   };

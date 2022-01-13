@@ -1,4 +1,4 @@
-import React, {FC, useRef} from "react";
+import React, {FC} from "react";
 import { useDispatch } from "react-redux";
 import {ImageElement, Size} from "../../model/Types";
 import useDragAndDrop from "../../customHooks/useDragAndDrop";

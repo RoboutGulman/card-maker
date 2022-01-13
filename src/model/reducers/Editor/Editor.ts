@@ -1,12 +1,12 @@
-import {Card, ElementType, Element, ArtObjectType} from "../Types";
+import {Card, ElementType, Element, ArtObjectType} from "../../Types";
 import {v4 as uuidv4} from "uuid";
-import { testEditor } from "../../state/templates/test";
+import {testEditor} from "../../../state/templates/test";
 
 export const saveJsonFile = (card : Card) => {
   const element = document.createElement("a");
   const jsonFile = new Blob([JSON.stringify(card, null, 2)], {type: "application/json"});
   element.href = URL.createObjectURL(jsonFile);
-  element.download = card.title+".json";
+  element.download = card.title + ".json";
   document.body.appendChild(element);
   element.click();
 };
@@ -130,8 +130,8 @@ export const editTextContent = (state : Element[], action : any, selectedElement
 };
 
 export const setTemplate = (action : any) => {
-    switch (action.index){
-      case 1:
-          return testEditor.card
-    }
-}
+  switch (action.index) {
+    case 1:
+      return testEditor.card;
+  }
+};

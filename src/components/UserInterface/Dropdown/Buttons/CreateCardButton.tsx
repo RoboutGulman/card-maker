@@ -1,30 +1,26 @@
 import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { ActionType } from '../../../state/editorReducer';
-import { Content } from '../Menu/Menu';
-import Modal from '../Modal/Modal';
-import MyButton from '../MyButton/MyButton';
-type TemplatesButtonProps={
+import { Content } from '../../Menu/Menu';
+import Modal from '../../Modal/Modal';
+import MyButton from '../../MyButton/MyButton';
+type CreateCardButtonProps={
     index:number,
     setActive:(a:number)=>void;
-    item:Content;
+    item : Content,
 }
-const setTemplate=(index:number)=>{
-    return {type:ActionType.SET_TEMPLATE, index:index}
-}
-const TemplatesButton: FC<TemplatesButtonProps> = ({index, setActive,item} : TemplatesButtonProps) => {
+const CreateCardButton: FC<CreateCardButtonProps> = ({index, setActive, item} : CreateCardButtonProps) => {
     const dispatch = useDispatch();
     const [modalAcive, setModalActive] = useState(false)
     return (
         <div>
             <Modal active={modalAcive} setActive={setModalActive}>
-                <p>Выберите шаблон</p>
+                <div style={{font: '600 14px Arial'}}><p>Все несохранённые данные будут потеряны</p></div>
                 <div><MyButton
-                  text="тест" 
+                  text="всё равно создать" 
                   onClick={()=>{
                       setModalActive(false); 
                       setActive(-1); 
-                      dispatch(setTemplate(1));
+                      dispatch(item.func());
                     }}/>
                     </div>
                 <MyButton 
@@ -42,4 +38,4 @@ const TemplatesButton: FC<TemplatesButtonProps> = ({index, setActive,item} : Tem
     )
 }
 
-export default TemplatesButton
+export default CreateCardButton

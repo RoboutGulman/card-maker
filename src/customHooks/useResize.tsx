@@ -1,4 +1,4 @@
-import  { useEffect} from "react";
+import {useEffect} from "react";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {Element, Size} from "../model/Types";
@@ -20,8 +20,6 @@ export default function useResize({element, parentSize, isActive} : Resize) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //if (!dragging && resizePosition.x != 0 && resizePosition.y != 0) 
-    //  setResizePosition({x: 0, y: 0});
     if (isActive === true) {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
@@ -33,7 +31,6 @@ export default function useResize({element, parentSize, isActive} : Resize) {
   });
 
   const onMouseDownResize = (e : any) => {
-    // only left mouse button
     if (e.button !== 0) 
       return;
     setDragging(true);
@@ -43,21 +40,23 @@ export default function useResize({element, parentSize, isActive} : Resize) {
   const onMouseMove = (e : any) => {
     if (!dragging) 
       return;
-    var x = e.pageX - relativePosition.x;    
-    if (x + 5 > parentSize.width) {
-      x = parentSize.width - 5;
-    }
+    var x = e.pageX - relativePosition.x;
     var y = e.pageY - relativePosition.y;
-    if (y + 5 > parentSize.height) {
-      y = parentSize.height - 5;
-    }
+    if (element.size.width + x <= 0) 
+      x = -element.size.width;
+    if (element.size.height + y <= 0) 
+      y = -element.size.height;
     setResizePosition({x: x, y: y});
     e.preventDefault();
   };
   const onMouseUp = (e : any) => {
     if (dragging) {
-      const width = resizePosition.x + element.size.width;
-      const height = resizePosition.y + element.size.height;
+      var width = resizePosition.x + element.size.width;
+      var height = resizePosition.y + element.size.height;
+      if (width < 0) 
+        width = 0;
+      if (height < 0) 
+        height = 0;
       dispatch(resize(element.elementID, width, height));
     }
     setResizePosition({x: 0, y: 0});

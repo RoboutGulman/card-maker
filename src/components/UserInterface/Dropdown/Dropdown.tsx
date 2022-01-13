@@ -3,11 +3,12 @@ import {useDispatch} from "react-redux";
 import MyButton from "../MyButton/MyButton";
 import {Content} from "../Menu/Menu";
 import classes from "./Dropdown.module.css";
-import {SelectCardButton, SelectImageButton} from "../../../customHooks/useFileLoader";
 import {Size} from "../../../model/Types";
-import CreateCardButton from "./CreateCardButton";
-import TemplatesButton from "./TemplatesButton";
-import SaveCardButton from "./SaveCardButton";
+import CreateCardButton from "./Buttons/CreateCardButton";
+import TemplatesButton from "./Buttons/TemplatesButton";
+import SaveCardButton from "./Buttons/SaveCardButton";
+import SelectImageButton from "./Buttons/SelectImageButton";
+import SelectCardButton from "./Buttons/SelectCardButton";
 
 interface DropDownProps {
   cardSize: Size;

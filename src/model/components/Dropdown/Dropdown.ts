@@ -5,7 +5,7 @@ export enum formatType{
 }
 type saveCardAsArguments={
   size: Size,
-  type:formatType,
+  type: formatType,
 }
 export function saveCardAs({ size, type}: saveCardAsArguments) {
     var stringobJ = new XMLSerializer();
@@ -26,8 +26,7 @@ export function saveCardAs({ size, type}: saveCardAsArguments) {
       canvas.width = image.width
       canvas.height = image.height
       var a =  document.createElement('a');
-      console.log(type)
-      if (type == 1){
+      if (type === 1){
         context?.drawImage(image, 0, 0);
         a.download = "image.png"; 
         a.href = canvas.toDataURL('image/png');

@@ -11,18 +11,3 @@
     background: #767e7846;
   }
   
-  .spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -7px 0 0 -7px;
-  }
-  
-  
-  .button:not(.button_loading) .spinner {
-    display: none;
-  }
-  
-  .button_loading .button-text {
-    visibility: hidden;
-  }
